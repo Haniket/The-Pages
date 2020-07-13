@@ -2214,8 +2214,8 @@ h6, .h6 {
 .navbar {
   width: 100%;
   padding: 1.875rem 1rem;
-  /* background: #3c37f1; */
-  background: transparent;
+  background: #3c37f1;
+  /* background: transparent; */
 }
 /* #3c37f1 */
 @media (max-width: 991px) {

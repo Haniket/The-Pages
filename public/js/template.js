@@ -1,10 +1,4 @@
-$(window).scroll(function () {
-if ($(window).scrollTop() >= 100) {
-$('.navbar').css('background','#3c37f1 ');
-} else {
-$('.navbar').css('background','transparent');
-}
-});
+
 
 (function($) {
 	'use strict';
