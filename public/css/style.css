@@ -1,14 +1,23 @@
-/* ------------------------------------------------css for signup-page------------------------------------- */
-/* .signup-page-body {
-	background: #f6f5f7;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
-	height: 100vh;
-	margin: -20px 0 50px;
+/* ---------------------------css for safety-page---------------------------------------------------------- */
+.safety-page-image1{
+	background: linear-gradient( 45deg,RGBA(0, 0, 0, 0.6),rgba(0, 0, 0, 0.6)),url("/images/safety-page-main-image.jpg");
+	background-repeat: no-repeat;
+
+}
+.safety-page-banner-title{
+	font-size: 4.5rem;
+font-family: 'Rowdies', cursive;
+}
+/* .safety-page-image2{
+	background: url("/images/safety-page-image2.jpg");
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+
 } */
+
+
+/* ------------------------------------------------css for signup-page------------------------------------- */
+
 .signup-page-p {
 	font-size: 14px;
 	font-weight: 100;
@@ -2247,6 +2256,9 @@ a.badge-dark:focus, a.badge-dark.focus {
 /*-------------------------------------------------------------------*/
 /* === Core Styles === */
 /* Reset Styles */
+
+
+
 body {
   padding: 0;
   margin: 0;
@@ -2602,6 +2614,53 @@ h6, .h6 {
   color: #e5e5e5;
 }
 
+.hr {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  margin: 5px 0px 60px 0px;
+}
+
+.hr-sm {
+  height: 8px;
+  margin: 0;
+  flex-grow: 1;
+  transition: all .8s ease-in-out;
+  cursor: pointer;
+}
+
+
+.hr-sm:hover {
+  flex-grow: 12;
+}
+
+
+
+.hr-red {
+  background-color: #FF5852;
+}
+
+.hr-orange {
+  background-color: #FF9000;
+}
+
+.hr-yellow {
+  background-color: #FFD300;
+}
+
+.hr-green {
+  background-color: #3DCD49;
+}
+
+.hr-blue {
+  background-color: #0089D7;
+}
+
+.hr-purple {
+  background-color: #9E44C4;
+}
+
+
 .navbar {
   width: 100%;
   padding: 1.875rem 1rem;
@@ -2799,7 +2858,7 @@ html {
 }
 
 .home {
-  background: url("../images/bg-image.svg");
+  background:  url("../images/bg-image.svg");
   background-repeat-y: no-repeat;
   background-attachment: fixed;
   background-position: 0 -50px;
