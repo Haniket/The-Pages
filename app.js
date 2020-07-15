@@ -24,6 +24,9 @@ app.get("/courses",function(req,res){
 app.get("/detail",function(req,res){
   res.render("detail");
 });
+app.get("/signup",function(req,res){
+  res.render("signup");
+});
 app.listen(3000,function(){
  console.log("server is started on port 3000");
 
