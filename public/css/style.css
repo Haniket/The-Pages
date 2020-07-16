@@ -3144,8 +3144,9 @@ section {
   color: #3c37f1;
 }
 .signUp-Box{
-  background: url(../images/sign-up.jpg);
+  background:  linear-gradient( 45deg,RGBA(0, 0, 0, 0.6),rgba(0, 0, 0, 0.6),RGBA(0, 0, 0, 0.6)),url("/images/sign-up.jpg");
   background-attachment: fixed;
+
 }
 .pricing-box img {
   margin-bottom: 37px;
@@ -3165,10 +3166,10 @@ section {
   box-shadow: 0 9px 15px 0 rgba(7, 42, 68, 0.09);
 }
 
-.pricing-box:hover {
+/* .pricing-box:hover {
   background: #ffffff;
 
-}
+} */
 
 .pricing-box:hover .title-text {
   color: #ffffff;
