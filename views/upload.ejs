@@ -1,0 +1,82 @@
+<%-include("partials/header")-%>
+<div class="row basic-margin">
+  <div class="col-md-5 col-12 mt-5">
+    <div class="card  d-inline">
+    <div class="mt-4">
+    <div class="upload-page-modal">
+      <div id="upload-page-profile" class="card-header">
+        <div class=" bordr border-primary"></div>
+        <label class=" bordr border-primary">Click to browse or drag an image here</label></div>
+        <input type="text" name="" value="" class=" mt-4 py-2" placeholder="Author" <i class="fa fa-pencil"></i>
+    <%-include("partials/hr")-%>
+     <div class="my-4">
+       <div class="stat">
+         <div class="label">Shots</div>
+          <div class="num">40</div>
+        </div>
+        <div class="stat">
+          <div class="label">Projects</div>
+          <div class="num">1</div>
+        </div>
+
+     </div>
+
+    </div>
+    </div>
+    </div>
+    <input type="file" id="upload-page-mediaFile" />
+  </div>
+  <div class="col-md-5 offset-md-1 shadow">
+    <div class=" card-body">
+        <h2 class="h3 text-primary my-3">Course Info</h2>
+        <form method="POST">
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Instructor Name" name="InstructorName">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="How Many Hours Is It" name="time">
+                <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+            </div>
+            <div class="input-group">
+                <div class="form-group">
+                  <label for="selectCourseprovider">Select Course Provider</label>
+                    <select name="courseProvider" class="form-control" id="selectCourseprovider">
+                        <!-- <option disabled="disabled" selected="selected">Website</option> -->
+                        <option>Select</option>
+                        <option>Udemy</option>
+                        <option>coursera</option>
+                        <option>Edx</option>
+                        <option>Udacity</option>
+                        <option>GeeksforGeeks</option>
+                        <option>Others</option>
+                    </select>
+                    <!-- <div class="select-dropdown"></div> -->
+                </div>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="YourName" name="YourName">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Hostel-name" name="HostelNum">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Room-no" name="HostelNum">
+            </div>
+
+                <button class="btn btn-success btn-xs" type="submit">Submit</button>
+
+        </form>
+    </div>
+
+  </div>
+  <div class="col-md-1">
+
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<script src="/js/upload.js" charset="utf-8"></script>
+
+<%-include("partials/footer")-%>

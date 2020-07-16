@@ -55,6 +55,10 @@ app.get("/safety",function(req,res){
 });
 
 
+app.get("/upload",function(req,res){
+  res.render("upload");
+});
+
 app.listen(3000,function(){
  console.log("server is started on port 3000");
 
