@@ -122,7 +122,28 @@ font-family: 'Rowdies', cursive;
 
 
 /* ------------------------------------------------css for signup-page------------------------------------- */
+#signup-page-partitioned {
+  padding-left: 15px;
+  letter-spacing: 42px;
+  border: 0;
+  background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+  background-position: bottom;
+  background-size: 50px 1px;
+  background-repeat: repeat-x;
+  background-position-x: 35px;
+  width: 220px;
+  min-width: 220px;
+}
 
+#signup-page-divInner{
+  left: 0;
+  position: sticky;
+}
+
+.signup-page-divOuter{
+  width: 186px;
+  overflow: hidden;
+}
 .signup-page-p {
 	font-size: 14px;
 	font-weight: 100;
@@ -2789,6 +2810,7 @@ h6, .h6 {
 .navbar .navbar-brand img {
   width: 200px;
 }
+
 
 @media (max-width: 991px) {
   .navbar .navbar-brand img {
