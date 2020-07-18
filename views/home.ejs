@@ -25,6 +25,11 @@
                 <img src="images/group1.svg" alt="marsmello" class="img-fluid" data-aos="zoom-in-up">
               </div>
             </div>
+
+              <form class="form-group home-form shadow">
+            <input type="search" placeholder="Search Book..."  class="form-control border-primary rounded py-2 " data-aos="flip-left">
+            </form>
+
           </div>
         </div>
       </div>
@@ -144,7 +149,7 @@
         <div class="col-sm-12">
           <div class="d-sm-flex justify-content-between align-items-center mb-2">
             <h3 class="font-weight-medium text-dark ">"Pages",Success At A Glance</h3>
-            <div><a href="/signup" class="btn btn-outline-primary">Join Now</a></div>
+            <div><a href="/books" class="btn btn-outline-primary">Buy Now</a></div>
           </div>
         </div>
       </div>
@@ -309,6 +314,14 @@
   $('.navbar').css('background','transparent');
   }
   });
+  // $(window).scroll(function() {
+  //   if ($(document).scrollTop() > 750 && $("#home-modal").attr("displayed") === "false") {
+  //     $('#home-modal').modal('show');
+  //     $("#home-modal").attr("displayed", "true");
+  //   }
+  // });
+  // $('#modal').modal('hide');
+
 </script>
 
 <%- include("partials/footer") -%>
