@@ -413,6 +413,8 @@ input {
 }
 .product-grid7 .course-page-pic-1 {
   opacity: 1;
+
+
   transition: all 0.5s ease-out 0s;
 }
 .product-grid7 .course-page-pic-2 {
@@ -421,10 +423,12 @@ input {
   position: absolute;
   top: 0;
   left: 0;
+
   transition: all 0.5s ease-out 0s;
 }
 .product-grid7:hover .course-page-pic-2 {
   opacity: 1;
+
   transform: rotateY(0);
 }
 .product-grid7 .social {

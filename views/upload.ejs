@@ -11,8 +11,12 @@
     <div class="upload-page-modal" data-aos-duration="500" data-aos="fade-up">
       <div id="upload-page-profile" class="card-header" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2500">
         <div class=" bordr border-primary"></div>
+
         <label for="" class=" bordr border-primary">Click to browse or drag an image here</label></div>
-        <input type="text" name="" value="" class=" mt-4 py-2" data-aos-duration="900" data-aos="fade-up" placeholder="Author" <i class="fa fa-pencil"></i>
+          <form class="" id="form1" action="/upload" method="POST"enctype="multipart/form-data" >
+        <input type="text" name="courseName" value="" class=" mt-2 " data-aos-duration="900" data-aos="fade-up" placeholder="Course Name" <i class="fa fa-pencil"></i>
+        <input type="text" name="actualPrice" value="" class=" mt-2" data-aos-duration="900" data-aos="fade-up" placeholder="Actual price" <i class="fa fa-pencil"></i>
+
     <%-include("partials/hr")-%>
      <div class="my-4">
        <div class="stat">
@@ -29,8 +33,9 @@
     </div>
     </div>
     </div>
-    <form class="" id="form1" action="/upload" method="POST"enctype="multipart/form-data" >
+
       <input type="file" id="upload-page-mediaFile"  name="courseImage" />
+
       <!-- <button id="primaryButton" type="submit" value="Upload" name="button" class="btn btn-primary btn-xs mx-auto ml-5">Upload Image</button> -->
     <!-- </form> -->
 
@@ -41,6 +46,9 @@
         <form method="POST" id="form2" action="/upload" data-aos-duration="1000" data-aos="fade-up">
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Instructor Name" name="InstructorName">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Discounted Price" name="discountedPrice">
             </div>
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="How Many Hours Is It" name="time">
@@ -63,7 +71,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="YourName" name="YourName">
+                <input class="form-control" type="text" placeholder="Course Discription" name="description">
             </div>
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Hostel-name" name="HostelNum">

@@ -69,6 +69,10 @@ courseProvider:  String,
 HostelNum: Number,
 RoomNum: Number,
 courseImage:String,
+courseName:String,
+discountedPrice:Number,
+actualPrice:Number,
+description:String,
 });
 
 const Seller = mongoose.model("Seller", SellerSchema);
@@ -130,7 +134,11 @@ var newSeller= new Seller({
   courseProvider: req.body.courseProvider,
   HostelNum:req.body.HostelNum,
   RoomNum: req.body.RoomNum,
-  courseImage:req.file.filename
+  courseImage:req.file.filename,
+  courseName:req.body.courseName,
+  discountedPrice:req.body.discountedPrice,
+  actualPrice:req.body.actualPrice,
+  description:req.body.description,
 });
 newSeller.save(function(err,result){
 if(err) throw err;
@@ -138,10 +146,12 @@ if(err) throw err;
 res.render('upload', { success:success});
 
 });
-var courseimage =newSeller.courseImage;
+var courseimage =newSeller.courseName;
+var discountedPrice =newSeller.discountedPrice;
+var actualPrice =newSeller.actualPrice;
 // console.log(success);
 // console.log(newSeller);
-// console.log("course image name "+courseimage);
+// console.log("course image name "+courseimage+" "+discountedPrice+" "+actualPrice);
 });
 
 
@@ -166,17 +176,49 @@ if(err){
 }
    else{
        res.render("courses",{results:results});
-      console.log(results);
+      // console.log(results);
    }
  })
 
 
 });
 
-app.route("/detail")
+app.route("/detailBooks")
 
 .get(function(req,res){
-  res.render("detail");
+  res.render("detailBooks");
+});
+
+
+
+
+app.route("/courses/detailcourses/:detailcoursesId")
+
+.get(function(req,res){
+    var route = req.params.detailcoursesId;
+  Seller.findOne({_id:route},function(err,result){
+  instructorName= result.InstructorName,
+  time = result.time,
+  courseProvider =result.courseProvider,
+  hostelNum=  result.HostelNum,
+  roomNum  =result.RoomNum,
+  courseImage=  result.courseImage,
+  courseName = result.courseName,
+  discountedPrice=  result.discountedPrice,
+  actualPrice = result.actualPrice,
+  description=result.description,
+
+
+  res.render("detailcourses",{
+  instructorName:instructorName,
+  hostelNum:hostelNum,
+  courseImage:courseImage,
+  courseName:courseName,
+  discountedPrice:discountedPrice,
+  description:description,
+  });
+});
+
 });
 
 

@@ -1,13 +1,13 @@
 <%-include("partials/header")-%>
-<div class="row basic-margin">
+<div class="row basic-margin justify-content-center">
   <%results.forEach(function(result){%>
     <div class="col-md-4 col-sm-6 ">
         <div class="product-grid7 shadow-sm p-3 mb-5 bg-white rounded shadow">
             <div class="product-image7 shadow">
-                <a href="#">
-                    <img class="course-page-pic-1" src="/uploads/<%=result.courseImage%>">
-                    <img class="course-page-pic-2" src="/images/course-page-udemy-sale.gif">
-                </a>
+
+                  <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-1 mx=auto " style="width:443.33px;height:255px;  object-fit:cover;" src="/uploads/<%=result.courseImage%>"></a>
+                  <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" src="/images/course-page-udemy-sale.gif"></a>
+
                 <ul class="social">
                     <li><a href="" class="fa fa-shopping-bag"></a></li>
                     <li><a href="/addtocart" class="fa fa-shopping-cart"></a></li>
@@ -15,7 +15,7 @@
                 <span class="product-new-label">New</span>
             </div>
             <div class="product-content">
-                <h3 class="title"><a href="#">Web Development Bootcamp</a></h3>
+                <h3 class="title"><a href="#"><%=result.courseName%></a></h3>
                 <ul class="rating">
                     <li class="fa fa-star"></li>
                     <li class="fa fa-star"></li>
@@ -23,18 +23,20 @@
                     <li class="fa fa-star"></li>
                     <li class="fa fa-star"></li>
                 </ul>
-                <div class="price">Rs150.00
-                    <span>Rs420.00</span>
+                <div class="price">Rs<%=result.discountedPrice%>.00
+
+                    <span>Rs<%=result.actualPrice%>.00</span>
                 </div>
             </div>
         </div>
     </div>
+
     <%})%>
-    <div class="col-md-4 col-sm-6 ">
+    <!-- <div class="col-md-4 col-sm-6 ">
         <div class="product-grid7 shadow-sm p-3 mb-5 bg-white rounded shadow">
             <div class="product-image7 shadow">
                 <a href="#">
-                    <img class="course-page-pic-1" src="/images/course-page-actual-logo.jpg">
+                    <img class="course-page-pic-1"  src="/images/course-page-actual-logo.jpg">
                     <img class="course-page-pic-2" src="/images/course-page-udemy-sale.gif">
                 </a>
                 <ul class="social">
@@ -57,7 +59,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <%-include("partials/hr")-%>
 </div>
 
