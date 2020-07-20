@@ -1,6 +1,6 @@
 <%-include("partials/header")-%>
 <div class="row basic-margin" >
-  <div class="signup-page-container d-flex justify-content-center bg-light signup-page-body mx-auto" id="signup-page-container">
+  <div class="signup-page-container d-flex justify-content-center bg-light signup-page-body mx-auto right-panel-active" id="signup-page-container" data-aos="flip-left" data-aos-duration="1000">
     <div class="form-container sign-up-container">
       <form  class="signup-page-form" action="#">
         <h1 class="font-weight-bold mx-0 my-0">Create Account</h1>
@@ -18,32 +18,16 @@
       </form>
     </div>
     <div class="form-container sign-in-container" >
-      <form  class="signup-page-form" action="#">
-        <h1 class="font-weight-bold mx-0 my-0">Sign in</h1>
-        <div class="social-container">
-          <a href="#" class="social signup-page-a"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social signup-page-a"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social signup-page-a"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <span class="signup-page-span">or use your account</span>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <a href="#" class="signup-page-a">Forgot your password?</a>
-        <button class="btn btn-primary shadow btn-xs">Sign In</button>
-      </form>
+
     </div>
-    <div class="overlay-container" data-aos="fade-up" data-aos-duration="1000">
+    <div class="overlay-container" data-aos="flip-left" data-aos-duration="1000">
       <div class="overlay">
         <div class="overlay-panel overlay-left">
           <h1 class="font-weight-bold mx-0 my-0">Hi,Welcome Back!</h1>
           <p class="signup-page-p">Nice to see you again,Enter your details and personal info to login to your account.</p>
-          <button class="ghost btn btn-light btn-xs shadow" id="signIn">Sign In</button>
+          <a href="/signin"><button class="ghost btn btn-light btn-xs shadow" id="signIn">Sign In</button></a>
         </div>
-        <div class="overlay-panel overlay-right">
-          <h1 class="font-weight-bold mx-0 my-0">Hello buddy , New Here?</h1>
-          <p class="signup-page-p">Enter your personal details to start a new and simplified journey only for your success....</p>
-          <button class="ghost btn btn-light btn-xs shadow" id="signUp">Sign Up</button>
-        </div>
+
        </div>
      </div>
    </div>
@@ -51,17 +35,13 @@
 
 
 
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
-  Launch demo modal
-</button> -->
 
-<!-- Modal -->
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <h5 class="modal-title  text-light" id="exampleModalLabel">OTP Verification</h5>
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title  text-light" id="exampleModalLabel">Make sure that your number is correct </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -69,30 +49,24 @@
       <div class="modal-body" data-aos="zoom-in" data-aos-duration="1000">
 
         <div >
-          <h3>Please enter the 4-digit verification code we sent via SMS:</h3>
-        <span>(we want to make sure it's you before proceed further....)</span>
-      <div id="Signup-page-divInner  ">
-        <form class="form-group signup-page-divOuter" action="index.html" method="post">
-        <input id="signup-page-partitioned" class="form-control px-1 mx-1" type="text" maxlength="4" onKeyPress="if(this.value.length==4) return false;"/>
-        <button type="submit" name="verify" class="btn btn-xs btn-success mt-5 pt-1 float-center"> Verify</button>
-        </form>
+          <h3>We will send the OTP on the number given make sure it is corrrect</h3>
+
+      <div   ">
+           <a href="/verify"><button type="submit" name="verify" class="btn btn-xs btn-success mt-5 pt-1 float-center"> Verify</button></a>
         <div class="mx-auto justify-content-center">
-        Didn't receive the code?<br />
-        <a href="#">Send code again</a><br />
+        Not your number?<br />
+
         <a href="#">Change phone number</a>
       </div>
       </div>
     </div>
       </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Verify</button>
-      </div> -->
+
     </div>
   </div>
 </div>
 
 
-  <script src="/js/signupJs.js" charset="utf-8"></script>
+  <!-- <script src="/js/signupJs.js" charset="utf-8"></script> -->
 
 <%-include("partials/footer")-%>

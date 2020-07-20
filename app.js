@@ -1,20 +1,147 @@
-const express = require('express');
-const ejs = require('ejs');
-const app=express();
-app.set('view engine','ejs');
+const express = require("express");
+const bodyParser = require("body-parser");
+const https = require("https");
+const ejs = require("ejs");
+const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
+const fs = require('fs')
+const multer  = require('multer');
+
+var path=require('path');
+const app = express();
+var router=express.Router();
+
+mongoose.set('useCreateIndex', true);
+app.set('view engine', 'ejs');
+
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+app.use(session({
+  secret: "ThePages gone wild.",
+  resave: false,
+  saveUninitialized: false
+}));
 
-app.get("/",function(req,res){
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+mongoose.connect("mongodb://localhost:27017/thepagesDB", {useNewUrlParser: true,useUnifiedTopology: true});
+
+const userSchema = new mongoose.Schema({
+Name : String,
+Email: String,
+Password: String,
+Phonenumber: Number
+});
+
+
+userSchema.plugin(passportLocalMongoose);
+
+const User = mongoose.model("User", userSchema);
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+var storage=multer.diskStorage({
+destination:"./public/uploads/",
+filename:(req,file,cb)=>{
+cb(null,file.fieldname+"_"+Date.now()+path.extname(file.originalname));
+
+}
+});
+
+var uploadImage=multer({
+  storage:storage
+}).single('courseImage');
+
+const SellerSchema = new mongoose.Schema({
+InstructorName: String,
+time: Number,
+courseProvider:  String,
+HostelNum: Number,
+RoomNum: Number,
+courseImage:String,
+});
+
+const Seller = mongoose.model("Seller", SellerSchema);
+
+// var imageData =.find({});
+
+
+app.route("/")
+
+.get(function(req,res){
 res.render("home");
-
 });
 
 
 
 
+app.get("/signup",function(req,res){
+  res.render("signup");
+});
+
+
 app.get("/books",function(req,res){
-  res.render("books");
+
+  if(req.isAuthenticated()){
+    res.render("books");
+  }else{
+    res.redirect("/signup");
+  }
+
+})
+
+
+app.post("/signup",function(req,res){
+
+  User.register({Email: res.body.UserEmail}, res.body.UserPassword , function(err, user) {
+    if (err){
+      console.log(err);
+      res.redirect("/signup");
+    } else {
+passport.authenticate("local")(req, res, function(){
+  res.redirect("/books");
+})
+    }
+});
+});
+
+
+app.route("/upload")
+
+.get(function(req,res){
+  res.render("upload",{success:''});
+});
+
+app.post("/upload",uploadImage,function(req,res){
+  var success =" uploaded successfully";
+var newSeller= new Seller({
+  InstructorName: req.body.InstructorName,
+  time: req.body.time,
+  courseProvider: req.body.courseProvider,
+  HostelNum:req.body.HostelNum,
+  RoomNum: req.body.RoomNum,
+  courseImage:req.file.filename
+});
+newSeller.save(function(err,result){
+if(err) throw err;
+
+res.render('upload', { success:success});
+
+});
+var courseimage =newSeller.courseImage;
+// console.log(success);
+// console.log(newSeller);
+// console.log("course image name "+courseimage);
 });
 
 
@@ -25,27 +152,31 @@ app.get("/faq",function(req,res){
 
 
 
-app.get("/addtocart",function(req,res){
-  res.render("addtocart");
+app.route("/addtocart")
+
+.get(function(req,res){
+  res.render("addtocart",{
+  });
 });
-
-
 
 app.get("/courses",function(req,res){
-  res.render("courses");
+ Seller.find({},function(err,results){
+if(err){
+  console.log(err);
+}
+   else{
+       res.render("courses",{results:results});
+      console.log(results);
+   }
+ })
+
+
 });
 
+app.route("/detail")
 
-
-
-app.get("/detail",function(req,res){
+.get(function(req,res){
   res.render("detail");
-});
-
-
-
-app.get("/signup",function(req,res){
-  res.render("signup");
 });
 
 
@@ -55,9 +186,16 @@ app.get("/safety",function(req,res){
 });
 
 
-app.get("/upload",function(req,res){
-  res.render("upload");
+app.get("/signin",function(req,res){
+  res.render("signin");
 });
+
+
+
+app.get("/verify",function(req,res){
+  res.render("verify");
+});
+
 
 app.listen(3000,function(){
  console.log("server is started on port 3000");

@@ -1,12 +1,17 @@
 <%-include("partials/header")-%>
+<% if(success !=''){%>
+       <div class="alert alert-success mt-5 pt-5">
+     <strong>Success!</strong> <%= success %>
+         </div>
+     <% } %>
 <div class="row basic-margin">
-  <div class="col-md-5 col-12 mt-5">
+  <div class="col-md-5 col-12 mt-5 mx-auto">
     <div class="card  d-inline">
     <div class="mt-4">
     <div class="upload-page-modal" data-aos-duration="500" data-aos="fade-up">
       <div id="upload-page-profile" class="card-header" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2500">
         <div class=" bordr border-primary"></div>
-        <label class=" bordr border-primary">Click to browse or drag an image here</label></div>
+        <label for="" class=" bordr border-primary">Click to browse or drag an image here</label></div>
         <input type="text" name="" value="" class=" mt-4 py-2" data-aos-duration="900" data-aos="fade-up" placeholder="Author" <i class="fa fa-pencil"></i>
     <%-include("partials/hr")-%>
      <div class="my-4">
@@ -24,12 +29,16 @@
     </div>
     </div>
     </div>
-    <input type="file" id="upload-page-mediaFile" />
+    <form class="" id="form1" action="/upload" method="POST"enctype="multipart/form-data" >
+      <input type="file" id="upload-page-mediaFile"  name="courseImage" />
+      <!-- <button id="primaryButton" type="submit" value="Upload" name="button" class="btn btn-primary btn-xs mx-auto ml-5">Upload Image</button> -->
+    <!-- </form> -->
+
   </div>
   <div class="col-md-5 offset-md-1 shadow data-aos-duration="500" data-aos="fade-up"">
     <div class=" card-body">
         <h2 class="h3 text-primary my-3">Course Info</h2>
-        <form method="POST" data-aos-duration="1000" data-aos="fade-up">
+        <form method="POST" id="form2" action="/upload" data-aos-duration="1000" data-aos="fade-up">
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Instructor Name" name="InstructorName">
             </div>
@@ -60,10 +69,10 @@
                 <input class="form-control" type="text" placeholder="Hostel-name" name="HostelNum">
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Room-no" name="HostelNum">
+                <input class="form-control" type="text" placeholder="Room-no" name="RoomNum">
             </div>
 
-                <button class="btn btn-success btn-xs" type="submit">Submit</button>
+                <button id="secondaryButton" class="btn btn-success btn-xs" type="submit" value="Click" onclick="document.getElementById('primaryButton').click()">Submit</button>
 
         </form>
     </div>

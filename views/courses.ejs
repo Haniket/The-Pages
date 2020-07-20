@@ -1,10 +1,11 @@
 <%-include("partials/header")-%>
 <div class="row basic-margin">
+  <%results.forEach(function(result){%>
     <div class="col-md-4 col-sm-6 ">
         <div class="product-grid7 shadow-sm p-3 mb-5 bg-white rounded shadow">
             <div class="product-image7 shadow">
                 <a href="#">
-                    <img class="course-page-pic-1" src="/images/course-page-actual-logo.jpg">
+                    <img class="course-page-pic-1" src="/uploads/<%=result.courseImage%>">
                     <img class="course-page-pic-2" src="/images/course-page-udemy-sale.gif">
                 </a>
                 <ul class="social">
@@ -28,6 +29,7 @@
             </div>
         </div>
     </div>
+    <%})%>
     <div class="col-md-4 col-sm-6 ">
         <div class="product-grid7 shadow-sm p-3 mb-5 bg-white rounded shadow">
             <div class="product-image7 shadow">
