@@ -1,23 +1,23 @@
 <%-include("partials/header")-%>
-<div class="row basic-margin" >
+<div class="row basic-margin">
   <div class="signup-page-container d-flex justify-content-center bg-light signup-page-body mx-auto right-panel-active" id="signup-page-container" data-aos="flip-left" data-aos-duration="1000">
     <div class="form-container sign-up-container">
-      <form  class="signup-page-form" action="#">
+      <form class="signup-page-form" action="/signup" method="post">
         <h1 class="font-weight-bold mx-0 my-0">Create Account</h1>
         <div class="social-container">
           <a href="#" class="social signup-page-a"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social signup-page-a"><i class="fab fa-google-plus-g"></i></a>
+          <a href="/auth/google"class="social signup-page-a"><i class="fab fa-google-plus-g"></i></a>
           <a href="#" class="social signup-page-a"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span class="signup-page-span">or use your email for registration</span>
-        <input type="text" placeholder="Name" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <input type="tel" placeholder="Phone number" />
+        <input type="text" placeholder="Name" name="NameUser" />
+        <input type="email" placeholder="Email" name="username" />
+        <input type="password" placeholder="Password" name="password" />
+        <input type="tel" placeholder="Phone number" name="UserPhone" />
         <button class="btn btn-danger  btn-xs mt-3 shadow" data-toggle="modal" data-target="#basicExampleModal">Sign Up</button>
       </form>
     </div>
-    <div class="form-container sign-in-container" >
+    <div class="form-container sign-in-container">
 
     </div>
     <div class="overlay-container" data-aos="flip-left" data-aos-duration="1000">
@@ -28,45 +28,13 @@
           <a href="/signin"><button class="ghost btn btn-light btn-xs shadow" id="signIn">Sign In</button></a>
         </div>
 
-       </div>
-     </div>
-   </div>
-</div>
-
-
-
-
-<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-warning">
-        <h5 class="modal-title  text-light" id="exampleModalLabel">Make sure that your number is correct </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
-      <div class="modal-body" data-aos="zoom-in" data-aos-duration="1000">
-
-        <div >
-          <h3>We will send the OTP on the number given make sure it is corrrect</h3>
-
-      <div   ">
-           <a href="/verify"><button type="submit" name="verify" class="btn btn-xs btn-success mt-5 pt-1 float-center"> Verify</button></a>
-        <div class="mx-auto justify-content-center">
-        Not your number?<br />
-
-        <a href="#">Change phone number</a>
-      </div>
-      </div>
-    </div>
-      </div>
-
     </div>
   </div>
 </div>
 
 
-  <!-- <script src="/js/signupJs.js" charset="utf-8"></script> -->
+
+<!-- <script src="/js/signupJs.js" charset="utf-8"></script> -->
 
 <%-include("partials/footer")-%>

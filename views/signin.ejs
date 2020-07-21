@@ -1,23 +1,31 @@
-<%-include("partials/header")-%>
-<div class="row basic-margin" >
-  <div class="signup-page-container d-flex justify-content-center bg-light signup-page-body mx-auto" id="signup-page-container"   data-aos="flip-left" data-aos-duration="1000">
 
-    <div class="form-container sign-in-container" >
-      <form  class="signup-page-form" action="#">
+
+
+
+
+
+
+
+<%-include("partials/header")-%>
+<div class="row basic-margin">
+  <div class="signup-page-container d-flex justify-content-center bg-light signup-page-body mx-auto" id="signup-page-container" data-aos="flip-left" data-aos-duration="1000">
+
+    <div class="form-container sign-in-container">
+      <form class="signup-page-form" action="/signin" method="post">
         <h1 class="font-weight-bold mx-0 my-0">Sign in</h1>
         <div class="social-container">
           <a href="#" class="social signup-page-a"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social signup-page-a"><i class="fab fa-google-plus-g"></i></a>
+          <a href="/auth/google" class="social signup-page-a"><i class="fab fa-google-plus-g"></i></a>
           <a href="#" class="social signup-page-a"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span class="signup-page-span">or use your account</span>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
+        <input type="email" placeholder="Email" name="username"/>
+        <input type="password" placeholder="Password"  name="password" />
         <a href="#" class="signup-page-a">Forgot your password?</a>
         <button class="btn btn-primary shadow btn-xs">Sign In</button>
       </form>
     </div>
-    <div class="overlay-container" >
+    <div class="overlay-container">
       <div class="overlay">
 
         <div class="overlay-panel overlay-right">
@@ -25,9 +33,9 @@
           <p class="signup-page-p">Enter your personal details to start a new and simplified journey only for your success....</p>
           <a href="/signup"><button class="ghost btn btn-light btn-xs shadow" id="signUp">Sign Up</button></a>
         </div>
-       </div>
-     </div>
-   </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -37,6 +45,6 @@
 
 
 
-  <script src="/js/signupJs.js" charset="utf-8"></script>
+<script src="/js/signupJs.js" charset="utf-8"></script>
 
 <%-include("partials/footer")-%>
