@@ -10,8 +10,20 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const fs = require('fs')
 const multer  = require('multer');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const findOrCreate = require('mongoose-find-or-create');
+const nodemailer = require("nodemailer");
+const sendgridTransport = require('nodemailer-sendgrid-transport');
 
+const transporter = nodemailer.createTransport(
+sendgridTransport({
+auth: {
+  api_key:
+  process.env.API_KEY,
+
+},
+})
+);
 
 
 var path=require('path');
@@ -43,7 +55,8 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   Phonenumber: Number,
-  googleId:String
+  googleId:String,
+  faecbookId:String
 });
 
 
@@ -80,7 +93,19 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-
+passport.use(new FacebookStrategy({
+    clientID: process.env.CLIENT_ID1,
+    clientSecret: process.env.CLIENT_SECRET1,
+    callbackURL: "http://localhost:3000/auth/facebook/books",
+  },
+  function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      if (err) { return done(err); }
+      done(null, user)
+    });
+  }
+));
 
 var storage=multer.diskStorage({
 destination:"./public/uploads/",
@@ -127,6 +152,18 @@ const SellSchema =  new mongoose.Schema({
 const Sell = mongoose.model("Sell", SellSchema);
 
 
+const OtpSchema = new mongoose.Schema({
+  otp: Number,
+});
+
+const Otp = mongoose.model("Otp",OtpSchema);
+
+var n = Math.random();
+n = n*8999;
+n = Math.floor(n)+1000;
+
+
+
 app.get(("/"),function(req,res){
 res.render("home");
 });
@@ -143,10 +180,41 @@ app.get("/auth/google/books",
     res.redirect('/books');
   });
 
+  app.get("/auth/facebook",
+    passport.authenticate('facebook')
+);
+
+  app.get("/auth/facebook/books",
+    passport.authenticate('faecbook', { failureRedirect: "/login" }),
+    function(req, res) {
+      // Successful authentication, redirect home.
+      res.redirect('/books');
+    });
+
 
 app.get("/verify",function(req,res){
   res.render("verify");
 });
+
+app.post("/verify/:id",function(req,res){
+  let otp = req.params.id;
+  Otp.findOne({_id: otp},function(err,otpps){
+    if(err){
+      console.log(err);
+      console.log(otpps.otp);
+      console.log(req.body.OTP);
+      res.redirect("/signup");
+    }else if(otpps.otp==req.body.OTP){
+      res.redirect("/books");
+      Otp.deleteOne({_id: otp},function(err){
+        if(err){
+          console.log(err);
+        }
+      })
+    }
+  })
+})
+
 
 app.get("/signup",function(req,res){
   res.render("signup");
@@ -192,16 +260,29 @@ app.get("/courses",function(req,res){
 
 
 app.post("/signup",function(req,res){
-
+var failure = "Please insert a valid Email address";
   User.register({ username: req.body.username , active: false}, req.body.password , function(err, user) {
     if (err){
       console.log(err);
       res.redirect("/signup");
     } else {
 passport.authenticate("local")(req, res, function(){
-  res.redirect("/verify");
+
+res.redirect("/verify");
+
+return transporter.sendMail({
+to: req.body.username,
+from: '"The Pages" <developerteam2023@gmail.com>',
+subject: "Sigup Successfully",
+html: "<h2>Your Verification code:"+n+"<h2>",
+});
+
 });
     }
+    const newOtp = new Otp({
+      otp: n,
+    });
+    newOtp.save();
 });
 });
 
@@ -312,7 +393,7 @@ app.route("/detailBooks")
 app.route("/courses/detailcourses/:detailcoursesId")
 
 .get(function(req,res){
-    var route = req.params.detailcoursesId;
+  var route = req.params.detailcoursesId;
   Seller.findOne({_id:route},function(err,result){
   instructorName= result.InstructorName,
   time = result.time,
