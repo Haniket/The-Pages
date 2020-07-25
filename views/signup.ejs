@@ -1,5 +1,11 @@
 <%-include("partials/header")-%>
+<%if(msg=="wrong otp Please signup again"){%>
+  <div class="alert alert-danger mt-5 pt-5 basic-margin">
+  <strong>Opps!</strong> <%= msg %>
+   </div>
+<%}%>
 <div class="row basic-margin">
+
   <div class="signup-page-container d-flex justify-content-center bg-light signup-page-body mx-auto right-panel-active" id="signup-page-container" data-aos="flip-left" data-aos-duration="1000">
     <div class="form-container sign-up-container">
       <form class="signup-page-form" action="/signup" method="post">

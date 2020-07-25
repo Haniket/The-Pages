@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const https = require("https");
 const ejs = require("ejs");
 const mongoose = require('mongoose');
+var flash = require('connect-flash');
+var Cart = require('./cart.js');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
@@ -41,7 +43,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
-
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -142,11 +144,13 @@ const Seller = mongoose.model("Seller", SellerSchema);
 const SellSchema =  new mongoose.Schema({
   Writer : String,
   Something: String,
-  Subject: String,
+  subject: String,
   BookName: String,
   Hostel: Number,
   Room: Number,
-  bookImage: String
+  bookImage: String,
+  discountedPrice:Number,
+  actualprice:Number
 });
 
 const Sell = mongoose.model("Sell", SellSchema);
@@ -154,13 +158,13 @@ const Sell = mongoose.model("Sell", SellSchema);
 
 const OtpSchema = new mongoose.Schema({
   otp: Number,
+  user:String,
+
 });
 
 const Otp = mongoose.model("Otp",OtpSchema);
 
-var n = Math.random();
-n = n*8999;
-n = Math.floor(n)+1000;
+
 
 
 
@@ -192,36 +196,62 @@ app.get("/auth/google/books",
     });
 
 
-app.get("/verify",function(req,res){
-  res.render("verify");
-});
+// app.get("/verify",function(req,res){
+//   Otp.findOne({user:req.body.username},function(err,results){
+//     if(err){
+//       console.log(err);
+//     }
+//     else{
+//     console.log(results);
+//     res.render("verify",{results:results});
+//   }});
+// });
 
 app.post("/verify/:id",function(req,res){
   let otp = req.params.id;
   Otp.findOne({_id: otp},function(err,otpps){
+    // console.log("in above otp"+otpps.otp);
+    // console.log("in above verify"+req.body.OTP);
     if(err){
       console.log(err);
-      console.log(otpps.otp);
-      console.log(req.body.OTP);
+      // console.log(otpps.otp);
+      // console.log(req.body.OTP);
       res.redirect("/signup");
     }else if(otpps.otp==req.body.OTP){
+      // console.log("noterror"+otpps.otp);
+      // console.log("noterr"+req.body.OTP);
       res.redirect("/books");
+
       Otp.deleteOne({_id: otp},function(err){
         if(err){
           console.log(err);
         }
       })
     }
+    else if(otpps.otp!=req.body.OTP){
+      Otp.deleteOne({_id: otp},function(err){
+        if(err){
+          console.log(err);
+        }
+      });
+      User.deleteOne({username:otpps.user},function(err){
+        if(err){
+          console.log(err);
+        }
+      });
+      req.flash('msg','wrong otp Please signup again');
+      res.redirect("/signup");
+    }
   })
 })
 
 
 app.get("/signup",function(req,res){
-  res.render("signup");
+  res.render("signup",{msg:req.flash('msg')});
 });
 
 app.get("/signin",function(req,res){
-res.render("signin");
+res.render("signin",{alreadyexists:req.flash('alreadyexists')});
 });
 
 app.get("/books",function(req,res){
@@ -231,8 +261,8 @@ app.get("/books",function(req,res){
       if(err){
         console.log(err);
       }else{
-        res.render("books",{founds:founds});
-        console.log(founds);
+        res.render("books",{founds:founds,msg:req.flash('cartmsg')});
+        // console.log(founds);
       }
     })
   }else{
@@ -250,7 +280,7 @@ app.get("/courses",function(req,res){
      }
         else{
             res.render("courses",{results:results});
-           console.log(results);
+           // console.log(results);
         }
       });
   }else{
@@ -260,15 +290,27 @@ app.get("/courses",function(req,res){
 
 
 app.post("/signup",function(req,res){
+  var n = Math.random();
+  n = n*8999;
+  n = Math.floor(n)+1000;
 var failure = "Please insert a valid Email address";
   User.register({ username: req.body.username , active: false}, req.body.password , function(err, user) {
     if (err){
       console.log(err);
-      res.redirect("/signup");
+      req.flash('alreadyexists','User already exists try Sign In');
+      res.redirect("/signin");
     } else {
 passport.authenticate("local")(req, res, function(){
 
-res.redirect("/verify");
+  Otp.findOne({user:req.body.username},function(err,results){
+    if(err){
+      console.log(err);
+    }
+    else{
+    // console.log(results);
+    res.render("verify",{results:results});
+  }});
+// res.redirect("/verify");
 
 return transporter.sendMail({
 to: req.body.username,
@@ -281,8 +323,14 @@ html: "<h2>Your Verification code:"+n+"<h2>",
     }
     const newOtp = new Otp({
       otp: n,
+      user:req.body.username,
+
     });
+    // console.log(req.body.username);
+
+
     newOtp.save();
+
 });
 });
 
@@ -317,7 +365,7 @@ app.route("/upload")
 });
 
 app.post("/upload",uploadImage,function(req,res){
-  var success =" uploaded successfully";
+  var success ="uploaded successfully";
 var newSeller= new Seller({
   InstructorName: req.body.InstructorName,
   time: req.body.time,
@@ -331,14 +379,18 @@ var newSeller= new Seller({
   description:req.body.description,
 });
 newSeller.save(function(err,result){
-if(err) throw err;
+  if(err) {
+    console.log(err);
+    res.render('upload', { success:"Oops its seems that you enter the wrong data type "});
+  }
 
+else {
 res.render('upload', { success:success});
-
+}
 });
-var courseimage =newSeller.courseName;
-var discountedPrice =newSeller.discountedPrice;
-var actualPrice =newSeller.actualPrice;
+// var courseimage =newSeller.courseName;
+// var discountedPrice =newSeller.discountedPrice;
+// var actualPrice =newSeller.actualPrice;
 });
 
 app.get("/upload-book",function(req,res){
@@ -351,15 +403,19 @@ var success = "Upload successfull See in book section your product added";
 var newSell = new Sell({
 Writer: req.body.WriterName,
 Something: req.body.Something,
-Subject: req.body.subject,
+subject: req.body.subject,
 BookName: req.body.BookName,
 Hostel: req.body.Hostel,
 Room : req.body.Room,
-bookImage : req.file.filename
+bookImage : req.file.filename,
+discountedPrice:req.body.discountedPrice,
+actualprice:req.body.actualprice,
 });
 newSell.save(function(err,found){
-if(err) throw err;
-
+  if(err) {
+    console.log(err);
+    res.render('upload-book', { success:"ERROR OCCURED:it seems that you have not given the correct data-type"});
+  };
 res.render('upload-book', { success:success});
 });
 
@@ -372,20 +428,15 @@ app.get("/faq",function(req,res){
 
 
 
-app.route("/addtocart")
+// app.route("/addtocart")
+//
+// .get(function(req,res){
+//   res.render("addtocart",{
+//   });
+// });
 
-.get(function(req,res){
-  res.render("addtocart",{
-  });
-});
 
 
-
-app.route("/detailBooks")
-
-.get(function(req,res){
-  res.render("detailBooks");
-});
 
 
 
@@ -418,9 +469,92 @@ app.route("/courses/detailcourses/:detailcoursesId")
 });
 });
 
+app.route("/books/detailBooks/:detailBookId")
+
+.get(function(req,res){
+    var route = req.params.detailBookId;
+    // console.log(route);
+  Sell.findOne({_id:route},function(err,found){
+    writer= found.Writer,
+    something= found.Something,
+    subject= found.subject,
+    bookName= found.BookName,
+    hostel= found.Hostel,
+    room =found.Room,
+    bookImage = found.bookImage,
+    discountedPrice = found.discountedPrice,
+    actualprice=found.actualprice
+
+  res.render("detailBooks",{
+    writer: writer,
+    something: something,
+    subject: subject,
+    bookName: bookName,
+    hostel: hostel,
+    room : room,
+    bookImage :bookImage,
+    discountedPrice:discountedPrice,
+    actualprice:actualprice,
+  });
+  // console.log(writer);
+});
+});
+
 app.get("/safety",function(req,res){
   res.render("safety");
 });
+
+
+
+
+app.get('/add/:id', function(req, res, next) {
+  Sell.find({_id:req.params.id},function(err,products){
+  if(!err){console.log(products);
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+  var product = products.filter(function(item) {
+    return item._id == productId;
+  });
+  console.log(product);
+  if(product){
+  cart.add(product[0], productId);
+  req.session.cart = cart;
+  req.flash('cartmsg','added to cart')
+  res.redirect('/books');
+}};
+
+});
+});
+
+app.get('/addtocart', function(req, res, next) {
+  if (!req.session.cart) {
+    return res.render('addtocart', {
+      products: null
+
+    });
+  }
+  var cart = new Cart(req.session.cart);
+  console.log(cart.getItems());
+  res.render('addtocart', {
+    // title: 'NodeJS Shopping Cart',
+    products: cart.getItems(),
+
+    totalPrice: cart.totalPrice
+  });
+});
+
+app.get('/remove/:id', function(req, res, next) {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+  cart.remove(productId);
+  req.session.cart = cart;
+
+  res.redirect('/addtocart');
+});
+
+
+
 
 
 app.listen(3000,function(){

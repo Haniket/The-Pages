@@ -1,9 +1,14 @@
 <%-include("partials/header")-%>
-<% if(success !=''){%>
+<% if(success ==='Upload successfull See in book section your product added'){%>
        <div class="alert alert-success mt-5 pt-5">
      <strong>Success!</strong> <%= success %>
          </div>
      <% } %>
+     <% if(success ==="ERROR OCCURED:it seems that you have not given the correct data-type"){%>
+            <div class="alert alert-danger mt-5 pt-5">
+          <strong>ERROR</strong> <%= success %>
+              </div>
+          <% } %>
 <div class="row basic-margin">
   <div class="col-md-5 col-12 mt-5 mx-auto">
     <div class="card  d-inline">
@@ -12,7 +17,8 @@
       <div id="upload-page-profile" class="card-header" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2500">
         <div class=" bordr border-primary"></div>
         <label for="" class=" bordr border-primary">Click to browse or drag an image here</label></div>
-        <input type="text" name="" value="" class=" mt-4 py-2" data-aos-duration="900" data-aos="fade-up" placeholder="Author" <i class="fa fa-pencil"></i>
+    <form class="" id="form1" action="/upload-book" method="POST"enctype="multipart/form-data" >
+        <input type="text" name="WriterName" value="" required class=" mt-4 py-2" data-aos-duration="900" data-aos="fade-up" placeholder="Author" <i class="fa fa-pencil"></i>
     <%-include("partials/hr")-%>
      <div class="my-4">
        <div class="stat">
@@ -29,8 +35,8 @@
     </div>
     </div>
     </div>
-    <form class="" id="form1" action="/upload" method="POST"enctype="multipart/form-data" >
-      <input type="file" id="upload-page-mediaFile"  name="bookImage" />
+
+      <input type="file" id="upload-page-mediaFile" required  name="bookImage" />
       <!-- <button id="primaryButton" type="submit" value="Upload" name="button" class="btn btn-primary btn-xs mx-auto ml-5">Upload Image</button> -->
     <!-- </form> -->
 
@@ -38,25 +44,30 @@
   <div class="col-md-5 offset-md-1 shadow data-aos-duration="500" data-aos="fade-up"">
     <div class=" card-body">
         <h2 class="h3 text-primary my-3">Book Info</h2>
-        <form method="POST" id="form2" action="/upload" data-aos-duration="1000" data-aos="fade-up">
-            <div class="form-group">
-                <input class="form-control" type="text" placeholder="Writer Name" name="WriterName">
-            </div>
+        <form method="POST" id="form2" action="/upload-book" data-aos-duration="1000" data-aos="fade-up">
+          <div class="form-group">
+              <input class="form-control" required type="text" placeholder="Subject" name="subject">
+          </div>
+
             <div class="form-group">
                 <input class="form-control" type="text" placeholder=" Something about book" name="Something">
                 <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
           </div>
+
           <div class="form-group">
-              <input class="form-control" type="text" placeholder="Subject" name="Subject">
+              <input class="form-control" type="text" required placeholder="BookName" name="BookName">
           </div>
           <div class="form-group">
-              <input class="form-control" type="text" placeholder="BookName" name="BookName">
+              <input class="form-control" type="text" required placeholder="Actual Price" name="actualprice">
           </div>
           <div class="form-group">
-              <input class="form-control" type="text" placeholder="Hostel-name" name="Hostel">
+              <input class="form-control" type="text" required placeholder="discounted Price" name="discountedPrice">
+          </div>
+          <div class="form-group">
+              <input class="form-control" type="text" required placeholder="Hostel-name" name="Hostel">
         </div>
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Room-no" name="Room">
+            <input class="form-control" type="text" required placeholder="Room-no" name="Room">
           </div>
               <button id="secondaryButton" class="btn btn-success btn-xs" type="submit" value="Click" onclick="document.getElementById('primaryButton').click()">Submit</button>
 

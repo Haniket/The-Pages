@@ -7,6 +7,11 @@
 
 
 <%-include("partials/header")-%>
+<%if(alreadyexists=="User already exists try Sign In"){%>
+  <div class="alert alert-warning mt-5 pt-5 basic-margin">
+  <strong>Hey!! </strong> <%= alreadyexists %>
+   </div>
+<%}%>
 <div class="row basic-margin">
   <div class="signup-page-container d-flex justify-content-center bg-light signup-page-body mx-auto" id="signup-page-container" data-aos="flip-left" data-aos-duration="1000">
 

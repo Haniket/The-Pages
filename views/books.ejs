@@ -1,35 +1,40 @@
 <%- include("partials/header") -%>
 
 
-<div class = "container-fluid  ">
- <div class=" mt-8 mx-3 mb-5 basic-margin">
-   <div class="col-md-4 col-sm-6 shadow px-2 py-2">
-     <div class="product-grid3">
-       <div class="product-image3">
-           <a href="/detail"><img class="pic-1" src="/images/img1.jpg"></a>
-           <a href="/detail"><img class="pic-2" src="/images/img1.jpg"></a>
-         <ul class="social">
-           <li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
-           <li><a href="/addtocart"><i class="fa fa-shopping-cart"></i></a></li>
-         </ul>
-         <span class="product-new-label">New</span>
-       </div>
-       <div class="product-content">
-         <h3 class="title"><a href="#">Mathematics</a></h3>
-         <div class="price">
-           Rs 300
-           <span>Rs 500</span>
-         </div>
-         <ul class="rating">
-           <li class="fa fa-star"></li>
-           <li class="fa fa-star"></li>
-           <li class="fa fa-star"></li>
-           <li class="fa fa-star"></li>
-           <li class="fa fa-star disable"></li>
-         </ul>
-       </div>
-     </div>
-   </div>
- </div>
+<div class="row basic-margin justify-content-center">
+  <%founds.forEach(function(found){%>
+    <div class="col-md-4 col-sm-6   py-2  my-3">
+      <div class="product-grid3 shadow ">
+        <div class="product-image3 shadow-lg">
+            <a href="books/detailBooks/<%=found._id%>"><img class="pic-1" src="/uploads/<%=found.bookImage%>" style="width:476.33px;height:267px;  object-fit:cover;"></a>
+            <a href="books/detailBooks/<%=found._id%>"><img class="pic-2" src="/images/img1.jpg"></a>
+          <ul class="social">
+            <li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
+            <li><a href="/add/<%=found._id%>"><i class="fa fa-shopping-cart"></i></a></li>
+          </ul>
+          <span class="product-new-label">New</span>
+        </div>
+        <div class="product-content">
+          <h3 class="title h4"><a href="#"> <%=found.subject%></a></h3>
+          <div class="price">
+            Rs <%=found.discountedPrice%>
+            <span>Rs <%=found.actualprice%>.00</span>
+          </div>
+          <ul class="rating">
+            <li class="fa fa-star"></li>
+            <li class="fa fa-star"></li>
+            <li class="fa fa-star"></li>
+            <li class="fa fa-star"></li>
+            <li class="fa fa-star disable"></li>
+          </ul>
+        </div>
+
+  </div>
+    </div>
+
+    <%})%>
+    <%-include("partials/hr")-%>
 </div>
+
+
 <%- include("partials/footer") -%>

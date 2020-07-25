@@ -1,21 +1,20 @@
 <%-include("partials/header")-%>
-
 <div class="row justify-content-center">
   <div class="col-md-4 " data-aos="flip-left" data-aos-duration="1000">
     <div class="card basic-margin shadow" id="basicExampleModal" tabindex="-1" "  >
       <div class="" role="document">
         <div class="card-content">
           <div class="card-header bg-primary">
-            <h5 class="modal-title  text-light" id="exampleModalLabel">OTP Verification</h5>
+            <h4 class="modal-title  text-light" id="exampleModalLabel">OTP Verification<br><h5 class=" text-light">check your Email:"<%=results.user%>"</h5></h4>
 
           </div>
           <div class="card-body" data-aos="zoom-in" data-aos-duration="1300">
 
             <div >
-              <h3>Please enter the 4-digit verification code we sent via SMS:</h3>
+              <h3>Please enter the 4-digit verification code we sent via Email:</h3>
             <span>(we want to make sure it's you before proceed further....)</span>
           <div id="Signup-page-divInner  ">
-            <form class="form-group signup-page-divOuter" action="/verify/:id" method="post">
+            <form class="form-group signup-page-divOuter" action="/verify/<%=results._id%>" method="post">
             <input id="signup-page-partitioned" class="form-control px-1 mx-1" name ="OTP" type="text" maxlength="4" onKeyPress="if(this.value.length==4) return false;"/>
             <button type="submit" name="verify" class="btn btn-xs btn-success mt-5 pt-1 float-center"> Verify</button>
             </form>

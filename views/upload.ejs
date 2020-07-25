@@ -1,9 +1,14 @@
 <%-include("partials/header")-%>
-<% if(success !=''){%>
+<% if(success ==='uploaded successfully'){%>
        <div class="alert alert-success mt-5 pt-5">
      <strong>Success!</strong> <%= success %>
          </div>
      <% } %>
+     <% if(success ==="Oops its seems that you enter the wrong data type "){%>
+            <div class="alert alert-danger mt-5 pt-5">
+          <strong>ERROR!</strong> <%= success %>
+              </div>
+          <% } %>
 <div class="row basic-margin">
   <div class="col-md-5 col-12 mt-5 mx-auto">
     <div class="card  d-inline">
@@ -14,8 +19,8 @@
 
         <label for="" class=" bordr border-primary">Click to browse or drag an image here</label></div>
           <form class="" id="form1" action="/upload" method="POST"enctype="multipart/form-data" >
-        <input type="text" name="courseName" value="" class=" mt-2 " data-aos-duration="900" data-aos="fade-up" placeholder="Course Name" <i class="fa fa-pencil"></i>
-        <input type="text" name="actualPrice" value="" class=" mt-2" data-aos-duration="900" data-aos="fade-up" placeholder="Actual price" <i class="fa fa-pencil"></i>
+        <input type="text" name="courseName" value="" required class=" mt-2 " data-aos-duration="900" data-aos="fade-up" placeholder="Course Name" <i class="fa fa-pencil"></i>
+        <input type="text" name="actualPrice" value="" required class=" mt-2" data-aos-duration="900" data-aos="fade-up" placeholder="Actual price" <i class="fa fa-pencil"></i>
 
     <%-include("partials/hr")-%>
      <div class="my-4">
@@ -34,7 +39,7 @@
     </div>
     </div>
 
-      <input type="file" id="upload-page-mediaFile"  name="courseImage" />
+      <input type="file" id="upload-page-mediaFile" required name="courseImage" />
 
       <!-- <button id="primaryButton" type="submit" value="Upload" name="button" class="btn btn-primary btn-xs mx-auto ml-5">Upload Image</button> -->
     <!-- </form> -->
@@ -45,19 +50,19 @@
         <h2 class="h3 text-primary my-3">Course Info</h2>
         <form method="POST" id="form2" action="/upload" data-aos-duration="1000" data-aos="fade-up">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Instructor Name" name="InstructorName">
+                <input class="form-control" required type="text" placeholder="Instructor Name" name="InstructorName">
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Discounted Price" name="discountedPrice">
+                <input class="form-control" required type="text" placeholder="Discounted Price" name="discountedPrice">
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="How Many Hours Is It" name="time">
+                <input class="form-control" required type="text" placeholder="How Many Hours Is It" name="time">
                 <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
             </div>
             <div class="input-group">
                 <div class="form-group">
                   <label for="selectCourseprovider">Select Course Provider</label>
-                    <select name="courseProvider" class="form-control" id="selectCourseprovider">
+                    <select name="courseProvider" required class="form-control" id="selectCourseprovider">
                         <!-- <option disabled="disabled" selected="selected">Website</option> -->
                         <option>Select</option>
                         <option>Udemy</option>
@@ -74,10 +79,10 @@
                 <input class="form-control" type="text" placeholder="Course Discription" name="description">
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Hostel-name" name="HostelNum">
+                <input class="form-control" required type="text" placeholder="Hostel-name" name="HostelNum">
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Room-no" name="RoomNum">
+                <input class="form-control" required type="text" placeholder="Room-no" name="RoomNum">
             </div>
 
                 <button id="secondaryButton" class="btn btn-success btn-xs" type="submit" value="Click" onclick="document.getElementById('primaryButton').click()">Submit</button>
