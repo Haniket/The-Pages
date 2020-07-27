@@ -1,12 +1,17 @@
 <%- include("partials/header") -%>
-
+<div class="row justify-content-center"style="position:absolute;right:10%">
+  <form class=" mt-5 " method="GET" action="/books">
+    <div class="search-box    mt-5 "><input type="text" placeholder="Search by Name,Author,Subject" name="searchBook" class="my-0" /><span></span></div>
+  </form>
+</div>
 
 <div class="row basic-margin justify-content-center">
+
   <%founds.forEach(function(found){%>
     <div class="col-md-4 col-sm-6   py-2  my-3">
       <div class="product-grid3 shadow ">
         <div class="product-image3 shadow-lg">
-            <a href="books/detailBooks/<%=found._id%>"><img class="pic-1" src="/uploads/<%=found.bookImage%>" style="width:476.33px;height:267px;  object-fit:cover;"></a>
+            <a href="books/detailBooks/<%=found._id%>"><img class="pic-1" src="/uploads/<%=found.bookImage%>" style="width:100%;height:267px;  object-fit:cover;"></a>
             <a href="books/detailBooks/<%=found._id%>"><img class="pic-2" src="/images/img1.jpg"></a>
           <ul class="social">
             <li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
@@ -35,6 +40,16 @@
     <%})%>
     <%-include("partials/hr")-%>
 </div>
+<script type="text/javascript">
+  'use strict';
 
+  var searchBox = document.querySelectorAll('.search-box input[type="text"] + span');
+
+  searchBox.forEach((elm) => {
+  elm.addEventListener('click', () => {
+    elm.previousElementSibling.value = '';
+  });
+  });
+</script>
 
 <%- include("partials/footer") -%>

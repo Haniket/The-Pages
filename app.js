@@ -62,7 +62,6 @@ const userSchema = new mongoose.Schema({
 });
 
 
-
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
@@ -165,10 +164,26 @@ const OtpSchema = new mongoose.Schema({
 const Otp = mongoose.model("Otp",OtpSchema);
 
 
-
+// function findbook(search){
+//    const regex = new RegExp(escapeRegex(search), 'gi');
+//    Sell.find({ $or: [{BookName:regex},{subject:regex},{Writer:regex}]}, function(err, foundbook) {
+//        if(err) {
+//            console.log(err);
+//        } else {
+//          // res.render("books",{founds:foundbook})
+//           console.log("i found "+foundbook);
+//           return foundbook._id;
+//         }})
+//
+//       }
 
 
 app.get(("/"),function(req,res){
+//   console.log(req.query.search);
+//   if (req.query.search) {
+//   var found= findbook(req.query.search);
+//   console.log("in get"+found);
+// }
 res.render("home");
 });
 
@@ -208,12 +223,18 @@ app.get("/auth/google/books",
 // });
 
 app.post("/verify/:id",function(req,res){
+
   let otp = req.params.id;
   Otp.findOne({_id: otp},function(err,otpps){
     // console.log("in above otp"+otpps.otp);
     // console.log("in above verify"+req.body.OTP);
     if(err){
       console.log(err);
+      Otp.deleteOne({_id: otp},function(err){
+        if(err){
+          console.log(err);
+        }
+      });
       // console.log(otpps.otp);
       // console.log(req.body.OTP);
       res.redirect("/signup");
@@ -257,6 +278,23 @@ res.render("signin",{alreadyexists:req.flash('alreadyexists')});
 app.get("/books",function(req,res){
 
   if(req.isAuthenticated()){
+    if(req.query.searchBook){
+    const regex = new RegExp(escapeRegex(req.query.searchBook), 'gi');
+    Sell.find({ $or: [{BookName:regex},{subject:regex},{Writer:regex}]}, function(err, founds) {
+        if(err) {
+            console.log(err);
+        } else {
+          if(founds.lenght<1){
+
+          }
+          else{
+            console.log("i found book "+founds);
+              res.render("books",{founds:founds,msg:req.flash('cartmsg')});
+          }
+          // res.render("books",{founds:foundbook})
+
+         }});}
+         else{
     Sell.find({},function(err,founds){
       if(err){
         console.log(err);
@@ -264,7 +302,7 @@ app.get("/books",function(req,res){
         res.render("books",{founds:founds,msg:req.flash('cartmsg')});
         // console.log(founds);
       }
-    })
+    })}
   }else{
     res.redirect("/signup");
   }
@@ -274,16 +312,33 @@ app.get("/books",function(req,res){
 app.get("/courses",function(req,res){
 
   if(req.isAuthenticated()){
+    if(req.query.searchCourse){
+    const regex = new RegExp(escapeRegex(req.query.searchCourse), 'gi');
+    Seller.find({ $or: [{courseName:regex},{courseProvider:regex},{InstructorName:regex}]}, function(err, results) {
+        if(err) {
+            console.log(err);
+        } else {
+          if(results.lenght<1){
+
+          }
+          else{
+            console.log("i found course "+results);
+                res.render("courses",{results:results});
+          }
+
+
+         }});}
+         else{
     Seller.find({},function(err,results){
      if(err){
        console.log(err);
      }
         else{
             res.render("courses",{results:results});
-           // console.log(results);
+
         }
       });
-  }else{
+  }}else{
     res.redirect("/signup");
   }
 });
@@ -556,6 +611,9 @@ app.get('/remove/:id', function(req, res, next) {
 });
 
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 
 

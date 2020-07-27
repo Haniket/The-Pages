@@ -1,88 +1,65 @@
-<!doctype html>
-<html lang="en">
+<%- include("partials/header") -%>
+<div class="row justify-content-center basic-margin">
+  <div class="col-md-12">
+    <div class = " ">
 
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-    <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" data-auto-replace-svg="nest"></script>
-    <title>Books</title>
-</head>
+        <div class="wrapper mx-auto">
+            <div class="left">
+                <img src="my image.jpg" alt="user" width="250" height="250" class="rounded-circle">
+                <h4>Haniket</h4>
+                <li>
+                    <button type="button" class="btn btn-success">Edit</button>
+                </li>
+                <br>
+                <li>
+                    <button type="button" class="btn btn-danger ">Help</button>
+                </li>
 
-<body>
+            </div>
 
-    <div class="container-fluid">
-        <div class="row profile">
-            <div class="col-md-4">
-                <div class="profile-sidebar shadow p-3 mb-5 bg-white rounded">
-
-                    <div class="profile-userpic">
-                        <img src="/images/sample.png" class="img-responsive" alt="">
-                    </div>
-
-                    <div class="profile-usertitle">
-                        <div class="profile-usertitle-name">
-                            Deepanshu
+            <div class="right">
+                <div class="info">
+                    <h3>Information</h3>
+                    <div class="info_data">
+                        <div class="data">
+                            <h4>Email</h4>
+                            <p>hainket.yadav@gmail.com</p>
                         </div>
-                        <div class="profile-usertitle-job">
-                            Seller/buyer
+                        <div class="data">
+                            <h4>Phone</h4>
+                            <p>999929291</p>
                         </div>
                     </div>
-                    <div class="profile-userbuttons">
-                        <button type="button" class="btn btn-success btn-rounded">Buy</button>
-                        <button type="button" class="btn btn-danger btn-rounded">Sell</button>
+                </div>
+
+                <div class="projects">
+                    <h3>Details</h3>
+                    <div class="projects_data">
+                        <div class="data">
+                            <h4>BUY</h4>
+                            <p>10 books and 3 courses</p>
+                        </div>
+                        <div class="data">
+                            <h4>SELL</h4>
+                            <p>2 books and 3 courses </p>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="profile-usermenu">
-                        <ul class="Profile-list ">
-                            <li class="active example hoverable">
-                                <a href="#">
-
-                                    <i class="fa fa-home"></i> Overview </a>
-                            </li>
-                            <li>
-                                <a href="#"> <i class="fa fa-user"></i> Your orders </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-
-                                    <i class="fa fa-cog"></i> Settings </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-question-circle"></i>Help</a>
-                            </li>
-                        </ul>
-                    </div>
-
+                <div class="social_media">
+                    <ul>
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="col-md-8 shadow p-3 mb-5 bg-white rounded">
-                <div class="profile-content ">
-                    Accordingly content
-                </div>
-            </div>
+
         </div>
+
     </div>
-    <center>
-        <strong>Powered by <a href="/" target="_blank">The Pages</a></strong>
-    </center>
-    <br>
-    <br>
+  </div>
+</div>
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+<%- include("partials/footer") -%>
