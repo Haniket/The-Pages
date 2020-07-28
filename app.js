@@ -289,7 +289,7 @@ app.get("/books",function(req,res){
           }
           else{
             console.log("i found book "+founds);
-              res.render("books",{founds:founds,msg:req.flash('cartmsg')});
+              res.render("books",{founds:founds,msg:req.flash('cartmsg'),qty:req.flash('cartqty')});
           }
           // res.render("books",{founds:foundbook})
 
@@ -299,7 +299,7 @@ app.get("/books",function(req,res){
       if(err){
         console.log(err);
       }else{
-        res.render("books",{founds:founds,msg:req.flash('cartmsg')});
+        res.render("books",{founds:founds,msg:req.flash('cartmsg'),qty:req.flash('cartqty')});
         // console.log(founds);
       }
     })}
@@ -323,7 +323,7 @@ app.get("/courses",function(req,res){
           }
           else{
             console.log("i found course "+results);
-                res.render("courses",{results:results});
+                res.render("courses",{results:results,msg:req.flash('cartmsg'),qty:req.flash('cartqty')});
           }
 
 
@@ -334,7 +334,8 @@ app.get("/courses",function(req,res){
        console.log(err);
      }
         else{
-            res.render("courses",{results:results});
+
+            res.render("courses",{results:results,msg:req.flash('cartmsg'),qty:req.flash('cartqty')});
 
         }
       });
@@ -522,6 +523,7 @@ app.route("/courses/detailcourses/:detailcoursesId")
   courseName:courseName,
   discountedPrice:discountedPrice,
   description:description,
+  result:result,
   });
 });
 });
@@ -552,6 +554,7 @@ app.route("/books/detailBooks/:detailBookId")
     bookImage :bookImage,
     discountedPrice:discountedPrice,
     actualprice:actualprice,
+    found:found,
   });
   // console.log(writer);
 });
@@ -572,16 +575,40 @@ app.get('/add/:id', function(req, res, next) {
   var product = products.filter(function(item) {
     return item._id == productId;
   });
-  console.log(product);
+  // console.log(product);
   if(product){
   cart.add(product[0], productId);
   req.session.cart = cart;
-  req.flash('cartmsg','added to cart')
+  console.log(cart);
+  req.flash('cartmsg','added to cart');
+    req.flash('cartqty',cart.totalItems);
   res.redirect('/books');
 }};
 
 });
 });
+
+app.get('/addcourse/:id', function(req, res, next) {
+  Seller.find({_id:req.params.id},function(err,products){
+  if(!err){
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+  var product = products.filter(function(item) {
+    return item._id == productId;
+  });
+  // console.log(product);
+  if(product){
+  cart.add(product[0], productId);
+  req.session.cart = cart;
+  // console.log(cart);
+  req.flash('cartmsg','added to cart');
+  req.flash('cartqty',cart.totalItems)
+  res.redirect('/courses');
+}};
+
+});
+});
+
 
 app.get('/addtocart', function(req, res, next) {
   if (!req.session.cart) {
@@ -591,11 +618,12 @@ app.get('/addtocart', function(req, res, next) {
     });
   }
   var cart = new Cart(req.session.cart);
-  console.log(cart.getItems());
+  // console.log(cart.getItems());
+  // console.log(cart.totalItems);
   res.render('addtocart', {
     // title: 'NodeJS Shopping Cart',
     products: cart.getItems(),
-
+    totalItems:cart.totalItems,
     totalPrice: cart.totalPrice
   });
 });

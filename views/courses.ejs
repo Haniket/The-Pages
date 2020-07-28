@@ -1,21 +1,59 @@
 <%-include("partials/header")-%>
-<div class="row justify-content-center"style="position:absolute;right:10%;z-index:10">
-  <form class=" mt-5" method="GET" action="/courses">
-    <div class="search-box    mt-5"><input type="text" placeholder="Name,instructor Name or courseprovider" name="searchCourse" class="my-0" /><span></span></div>
-  </form>
+<% if(msg !=''){%>
+       <div class="alert alert-success mt-5 pt-5 mb-0 pb-0">
+     <strong>Success!</strong> <%= msg %> (<%=qty%>)
+         </div>
+     <% } %>
+
+<div class="row justify-content-center" style="margin-top:90px;margin-bottom:10px;">
+
+<div class="col-md-6 mx-auto ">
+  <form class=" mx-auto  " method="GET" action="/courses">
+    <input type="text"placeholder="Name,instructor Name or courseprovider"  class="form-control border-primary rounded py-3  " style="z-index:20;opacity:1;"  name="searchCourse" data-aos="flip-left">
+
+    </form>
 </div>
-<div class="row basic-margin justify-content-center pt-2">
+<div class="col-md-6 my-1 ">
+  <a href="/addtocart" class="float-right mx-5 h6"><i class="fa fa-shopping-cart fa-3x   " aria-hidden="true"></i>
+
+    (<%=qty%>)
+
+  </a>
+</div>
+</div>
+
+<div class="row  justify-content-center pt-2">
   <%results.forEach(function(result){%>
     <div class="col-md-4 col-sm-6 ">
         <div class="product-grid7 shadow-sm p-3 mb-5 bg-white rounded shadow">
             <div class="product-image7 shadow">
 
                   <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-1 " style="width:100%;height:255px;  object-fit:cover;" src="/uploads/<%=result.courseImage%>"></a>
-                  <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="/images/course-page-udemy-sale.gif"></a>
+     <%if(result.courseProvider=='Udemy'){%>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="/images/course-page-udemy-sale.gif"></a>
+     <%}%>
+
+     <% if(result.courseProvider=='coursera'){%>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="images/coursera-logo1.svg"></a>
+     <%}%>
+
+     <% if(result.courseProvider=='Edx'){%>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover; opacity:1;" src="images/edx-logo.svg"></a>
+     <%}%>
+
+     <% if(result.courseProvider=='Udacity'){%>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="/images/course-page-udemy-sale.gif"></a>
+     <%}%>
+     <% if(result.courseProvider=='GeeksforGeeks'){%>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20190710102234/download3.png"></a>
+     <%}%>
+     <% if(result.courseProvider=='Others'){%>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="/images/course-page-udemy-sale.gif"></a>
+     <%}%>
 
                 <ul class="social">
                     <li><a href="" class="fa fa-shopping-bag"></a></li>
-                    <li><a href="/addtocart" class="fa fa-shopping-cart"></a></li>
+                    <li><a href="/addcourse/<%=result._id%>" class="fa fa-shopping-cart"></a></li>
                 </ul>
                 <span class="product-new-label">New</span>
             </div>
@@ -37,34 +75,7 @@
     </div>
 
     <%})%>
-    <!-- <div class="col-md-4 col-sm-6 ">
-        <div class="product-grid7 shadow-sm p-3 mb-5 bg-white rounded shadow">
-            <div class="product-image7 shadow">
-                <a href="#">
-                    <img class="course-page-pic-1"  src="/images/course-page-actual-logo.jpg">
-                    <img class="course-page-pic-2" src="/images/course-page-udemy-sale.gif">
-                </a>
-                <ul class="social">
-                    <li><a href="" class="fa fa-shopping-bag"></a></li>
-                    <li><a href="/addtocart" class="fa fa-shopping-cart"></a></li>
-                </ul>
-                <span class="product-new-label">New</span>
-            </div>
-            <div class="product-content">
-                <h3 class="title"><a href="#">Web Development Bootcamp</a></h3>
-                <ul class="rating">
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                </ul>
-                <div class="price">Rs150.00
-                    <span>Rs420.00</span>
-                </div>
-            </div>
-        </div>
-    </div> -->
+
     <%-include("partials/hr")-%>
 </div>
 
