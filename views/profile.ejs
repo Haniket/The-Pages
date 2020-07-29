@@ -6,28 +6,35 @@
         <div class="wrapper mx-auto">
             <div class="left">
                 <img src="my image.jpg" alt="user" width="250" height="250" class="rounded-circle">
-                <h4>Haniket</h4>
-                <li>
-                    <button type="button" class="btn btn-success">Edit</button>
-                </li>
-                <br>
-                <li>
-                    <button type="button" class="btn btn-danger ">Help</button>
-                </li>
+                <h4><%=detail.name%></h4>
+<ul class="list-unstyled">
+  <li>
+      <button type="button" class="btn btn-success">Edit</button>
+  </li>
+  <br>
+  <li>
+      <button type="button" class="btn btn-danger ">Help</button>
+  </li>
+</ul>
+
 
             </div>
 
             <div class="right">
                 <div class="info">
-                    <h3>Information</h3>
+                    <h3>Information
+                      <%if(detail){%>
+                      <%=detail%>
+                    <%}%>
+                  </h3>
                     <div class="info_data">
                         <div class="data">
                             <h4>Email</h4>
-                            <p>hainket.yadav@gmail.com</p>
+                            <p><%=detail.email%></p>
                         </div>
                         <div class="data">
                             <h4>Phone</h4>
-                            <p>999929291</p>
+                            <p><%=detail.phonenumber%></p>
                         </div>
                     </div>
                 </div>
@@ -47,7 +54,7 @@
                 </div>
 
                 <div class="social_media">
-                    <ul>
+                    <ul class="list-unstyled">
                         <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                         <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                         <li><a href="#"><i class="fab fa-instagram"></i></a></li>

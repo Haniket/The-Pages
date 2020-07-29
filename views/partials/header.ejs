@@ -37,7 +37,7 @@
 							<a class="nav-link" href="/#services">How It Works</a>
 						</li>
 						<li class="nav-item dropdown ">
-							<a class="nav-link" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buy</a>
+							<a class="nav-link" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buy</a>
 								<div class="dropdown-menu mt-0" aria-labelledby="navbarDropdown1">
 	            <a class="dropdown-item my-1" href="/books">Books</a>
 	            <a class="dropdown-item" href="/courses">Courses</a>
@@ -50,9 +50,11 @@
 									<a class="dropdown-item" href="/upload">Courses</a>
 									</div>
 								</li>
+							<%if(detail==""){%>
 						<li class="nav-item">
 							<a class="nav-link" href="/signup">Sign Up</a>
 						</li>
+							<%}%>
 						<li class="nav-item">
 							<a class="nav-link" href="/safety">Help & Safety</a>
 						</li>
@@ -62,11 +64,17 @@
 					</ul>
 					<div class="dropdown pmd-dropdown pmd-user-info ml-auto float-right">
 					        <a href="#" class="btn-user  media align-items-center" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
-					            <!-- <img class="mr-2" src="/images/img1.jpg" width="40" height="40" style="border-radius: 50%"> -->
-										<a href="/profile"><button type="button" class="btn btn-lg btn-success rounded-circle "name="button">A</button></a>	
+
+									       <%if(detail){%>  <!-- <img class="mr-2" src="/images/img1.jpg" width="40" height="40" style="border-radius: 50%"> -->
+										<a href="/profile"><button type="button" class="btn btn-lg btn-success rounded-circle "name="button"><%=upperLetter%></button></a>
 											<ul class="dropdown-menu mt-0"  aria-labelledby="navbarDropdown1">
-										 		 <a class="dropdown-item" href="/profile">Edit Profile</a>
+
+												 <a class="dropdown-item" href="/profile/<%=detail._id%>">Edit Profile</a>
 										 		 <a class="dropdown-item" href="/logout">Logout</a>
+												 						 <%}%>
+														 <%if(detail==""){%>
+															<a href="/signin"><button type="button" class="btn btn-success btn-xs" name="button">Sign In</button></a>
+															<%}%>
 										  </ul>
 					        </a>
 
