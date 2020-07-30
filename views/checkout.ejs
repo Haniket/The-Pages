@@ -1,19 +1,35 @@
 <%- include("partials/header") -%>
-<div class="container-fluid basic-margin">
-  <div class="row justify-content-center ">
-    <h1>Thanks for Comming</h1>
-    <div class="col-12  d-inline-block">
-        <h3 class="text-secondary d-inline-block float-md-right px-5">here is the summary of what you have bought</h3>
+<!-- <div class="container-fluid "> -->
+  <div class="row justify-content-center basic-margin ">
+    <h1 class="text-info ml-5 ">Thanks for Comming</h1>
+    <div class="col-12 mx-5">
+      <h3 class="text-secondary   px-5 my-5 align-middle">here is the summary of what you have bought</h3>
+
     </div>
 
-    <div class="col-12 col-md-6 shadow px-5 py-5">
-      <div class="">
+    <div class="col-12 col-md-8 shadow px-5 py-5  data-aos="fade-up" ">
+      <%products.forEach(function(product){%>
+<h3 class="text-primary">Detail of your <%=product.item.courseName||product.item.BookName%> Product</h3>
+         <h5>Author:<%=product.item.InstructorName||product.item.Writer%></h5>
+         <h5>Price:<%=product.item.discountedPrice%></h5>
+         <h5>HostelNum:<%=product.item.HostelNum||product.item.Hostel%></h5>
+         <h5>Room Num:<%=product.item.Room||product.item.RoomNum%></h5>
+         <div class="shadow px-3 py-2 mb-5 rounded border-primary">
+           <h4>Seller Detail of this Product</h4>
+           <h5>Name: <%=product.item.name1||product.item.name%></h5>
+           <h5>Phone Number: <%=product.item.phonenumber1||product.item.phonenumber%></h5>
+           <%if(product.item.email){%>
+           <h5>Email:<%=product.item.email%></h5>
+         <%}%>
+         </div>
 
-      </div>
-      <a href="/"><button type="button" name="button">Return Home</button></a>
-    </div>
+    <% })%>
+    <a href="/"><button type="button" name="button" class="btn shadow-lg btn-success btn-xs">Return Home</button></a>
+
+        </div>
+
   </div>
-</div>
+<!-- </div> -->
 
 
 

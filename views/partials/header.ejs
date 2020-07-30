@@ -1,85 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>Pages</title>
-  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-		<link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
-		<link rel="stylesheet" href="/vendors/owl.carousel/css/owl.carousel.css">
-		<link rel="stylesheet" href="/vendors/owl.carousel/css/owl.theme.default.min.css">
-		<link rel="stylesheet" href="/vendors/aos/css/aos.css">
-		<link rel="stylesheet" href="/vendors/jquery-flipster/css/jquery.flipster.css">
-		<link rel="stylesheet" href="/css/style.css">
-		<link rel="shortcut icon" href="/images/favicon.ico" />
-    <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" data-auto-replace-svg="nest"></script>
 
-	</head>
-	<body data-spy="scroll" data-target=".navbar" data-offset="50" class="px-0">
-		<div id="mobile-menu-overlay"></div>
-		<nav class="navbar navbar-expand-lg fixed-top pt-2 pb-2">
-			<div class="container">
-				<a class="navbar-brand" href="/"><img src="/images/logo.svg" alt="Marshmallow"></a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Pages</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="/vendors/owl.carousel/css/owl.carousel.css">
+	<link rel="stylesheet" href="/vendors/owl.carousel/css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="/vendors/aos/css/aos.css">
+	<link rel="stylesheet" href="/vendors/jquery-flipster/css/jquery.flipster.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="shortcut icon" href="/images/favicon.ico" />
+	<script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" data-auto-replace-svg="nest"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50" class="px-0">
+	<div id="mobile-menu-overlay"></div>
+	<nav class="navbar navbar-expand-lg fixed-top pt-2 pb-2">
+		<div class="container">
+			<a class="navbar-brand" href="/"><img src="/images/logo.svg" alt="Marshmallow"></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+				aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"><i class="mdi mdi-menu"> </i></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-					<div class="d-lg-none d-flex justify-content-between px-4 py-3 align-items-center">
-						<img src="images/logo-dark.svg" class="logo-mobile-menu" alt="logo">
-						<a href="javascript:;" class="close-menu"><i class="mdi mdi-close"></i></a>
-					</div>
-					<ul class="navbar-nav ml-auto align-items-center">
-						<li class="nav-item active">
-							<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/#services">How It Works</a>
-						</li>
-						<li class="nav-item dropdown ">
-							<a class="nav-link" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buy</a>
-								<div class="dropdown-menu mt-0" aria-labelledby="navbarDropdown1">
-	            <a class="dropdown-item my-1" href="/books">Books</a>
-	            <a class="dropdown-item" href="/courses">Courses</a>
-						  </div>
-						</li>
-						<li class="nav-item dropdown ">
-									<a class="nav-link " href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sell</a>
-										<div class="dropdown-menu mt-0" aria-labelledby="navbarDropdown1">
-									<a class="dropdown-item my-1" href="/upload-book">Books</a>
-									<a class="dropdown-item" href="/upload">Courses</a>
-									</div>
-								</li>
-							<%if(detail==""){%>
-						<li class="nav-item">
-							<a class="nav-link" href="/signup">Sign Up</a>
-						</li>
-							<%}%>
-						<li class="nav-item">
-							<a class="nav-link" href="/safety">Help & Safety</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link btn-secondary " href="/faq">Contact Us</a>
-						</li>
-					</ul>
-					<div class="dropdown pmd-dropdown pmd-user-info ml-auto float-right">
-					        <a href="#" class="btn-user  media align-items-center" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
-
-									       <%if(detail){%>  <!-- <img class="mr-2" src="/images/img1.jpg" width="40" height="40" style="border-radius: 50%"> -->
-										<a href="/profile"><button type="button" class="btn btn-lg btn-success rounded-circle "name="button"><%=upperLetter%></button></a>
-											<ul class="dropdown-menu mt-0"  aria-labelledby="navbarDropdown1">
-
-												 <a class="dropdown-item" href="/profile/<%=detail._id%>">view Profile</a>
-										 		 <a class="dropdown-item" href="/logout">Logout</a>
-												 						 <%}%>
-														 <%if(detail==""){%>
-															<a href="/signin"><button type="button" class="btn btn-success btn-xs" name="button">Sign In</button></a>
-															<%}%>
-										  </ul>
-					        </a>
-
-					    </div>
-
+			</button>
+			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+				<div class="d-lg-none d-flex justify-content-between px-4 py-3 align-items-center">
+					<img src="images/logo-dark.svg" class="logo-mobile-menu" alt="logo">
+					<a href="javascript:;" class="close-menu"><i class="mdi mdi-close"></i></a>
 				</div>
+				<ul class="navbar-nav ml-auto align-items-center">
+					<li class="nav-item active">
+						<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<div class="dropdown nav-item">
+						<button class="btn btn-secondary dropdown-toggle buybutton" type="button"
+							style="margin:0px 8px 0px 0px; background-color:#ffffff00 " id="dropdownMenuButton"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buy</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="/books">Books</a>
+							<a class="dropdown-item" href="/courses">Course</a>
+						</div>
+					</div>
+					<div class="dropdown nav-item">
+						<button class="btn btn-secondary dropdown-toggle buybutton" type="button"
+							style=" background-color:#ffffff00" id="dropdownMenuButton" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">Sell</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item " href="/upload-book">Books</a>
+							<a class="dropdown-item" href="/upload">Course</a>
+						</div>
+					</div>
+					<%if(detail==""){%>
+					<li class="nav-item">
+						<a class="nav-link" href="/signup">Sign Up</a>
+					</li>
+					<%}%>
+					<li class="nav-item">
+						<a class="nav-link" href="/safety">Help & Safety</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link btn-secondary " href="/faq">ContactUs</a>
+					</li>
+				</ul>
+				
 			</div>
-		</nav>
+			<div class="dropdown pmd-dropdown pmd-user-info ml-auto ">
+				<a href="#" class="btn-user  media align-items-center" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
+					<%if(detail){%>
+				<a href="/profile/<%=detail._id%>"><button type="button" class="btn btn-lg btn-success rounded-circle profilebutton" name="button" style="margin-left: 20px;;"><%=upperLetter%></button></a>
+				<ul class="dropdown-menu mt-0" aria-labelledby="navbarDropdown1">
+
+					<a class="dropdown-item" href="/profile/<%=detail._id%>">Profile</a>
+
+					<a class="dropdown-item" href="/logout">Logout</a>
+					<%}%>
+					<%if(detail==""){%>
+					<a href="/signin"><button type="button" class="btn btn-success btn-xs" style="margin-left: 12px;" name="button">SignIn</button></a>
+					<%}%>
+					</ul>
+				</a>
+			</div>
+			
+	</div>
+</div>
+	</nav>

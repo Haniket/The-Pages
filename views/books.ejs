@@ -32,13 +32,13 @@
 
   <%founds.forEach(function(found){%>
 
-    <div class="col-md-4 col-sm-6   py-2  my-3">
+    <div class="col-md-4 col-6   py-2  my-3">
       <div class="product-grid3 shadow " data-aos="fade-up">
         <div class="product-image3 shadow-lg">
-          <img class="pic-1" src="/uploads/<%=found.bookImage%>" style="width:100%;height:267px;  object-fit:cover;">
-            <a href="books/detailBooks/<%=found._id%>"><img class="pic-2" style="width:100%;height:267px;  object-fit:cover;" src="/uploads/<%=found.bookImage%>"></a>
+          <img class="pic-1 bookpic" src="/uploads/<%=found.bookImage%>" style="width:100%;height:267px;  object-fit:cover;">
+            <a href="books/detailBooks/<%=found._id%>"><img class="pic-2 bookpic" style="width:100%;height:267px;  object-fit:cover;" src="/uploads/<%=found.bookImage%>"></a>
           <ul class="social">
-            <li><a href="/checkout"><i class="fa fa-shopping-bag"></i></a></li>
+            <li><a href="/books/detailBooks/<%=found._id%>"><i class="fa fa-shopping-bag"></i></a></li>
             <li><a href="/add/<%=found._id%>"><i class="fa fa-shopping-cart"></i></a></li>
           </ul>
           <span class="product-new-label">New</span>
@@ -49,13 +49,13 @@
             Rs <%=found.discountedPrice%>
             <span>Rs <%=found.actualprice%>.00</span>
           </div>
-          <ul class="rating">
+          <!-- <ul class="rating">
             <li class="fa fa-star"></li>
             <li class="fa fa-star"></li>
             <li class="fa fa-star"></li>
             <li class="fa fa-star"></li>
             <li class="fa fa-star disable"></li>
-          </ul>
+          </ul> -->
         </div>
 
   </div>

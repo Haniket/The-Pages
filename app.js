@@ -353,7 +353,7 @@ res.render("signin",{alreadyexists:req.flash('alreadyexists'),detail:""});
 
 app.get("/books",function(req,res){
 
-  if(req.isAuthenticated()){
+ 
     if(req.query.searchBook){
     const regex = new RegExp(escapeRegex(req.query.searchBook), 'gi');
     Sell.find({ $or: [{BookName:regex},{subject:regex},{Writer:regex}]}, function(err, founds) {
@@ -413,15 +413,11 @@ app.get("/books",function(req,res){
         // console.log(founds);
       }
     })}
-  }else{
-    res.redirect("/signup");
+ 
   }
-
-});
+);
 
 app.get("/courses",function(req,res){
-
-  if(req.isAuthenticated()){
     if(req.query.searchCourse){
     const regex = new RegExp(escapeRegex(req.query.searchCourse), 'gi');
     Seller.find({ $or: [{courseName:regex},{courseProvider:regex},{InstructorName:regex}]}, function(err, results) {
@@ -483,10 +479,9 @@ app.get("/courses",function(req,res){
 
         }
       });
-  }}else{
-    res.redirect("/signup");
   }
-});
+  }
+);
 
 
 app.post("/signup",function(req,res){
@@ -508,7 +503,12 @@ newDetail.save();
       res.redirect("/signin");
     } else {
 passport.authenticate("local")(req, res, function(){
-
+  var output = `
+  <h2>Hi`+ ` `+ req.body.NameUser +`!</h2>
+  <h3>Your Verifcation code is: `+n+`</h3>
+  <h4>Thanks for Visting</h4>
+  <p>Have a Good Day!</p>
+  `;
   Otp.findOne({user:req.body.username},function(err,results){
     if(err){
       console.log(err);
@@ -522,8 +522,8 @@ passport.authenticate("local")(req, res, function(){
 return transporter.sendMail({
 to: req.body.username,
 from: '"The Pages" <developerteam2023@gmail.com>',
-subject: "Sigup Successfully",
-html: "<h2>Your Verification code:"+n+"<h2>",
+subject: "Verification",
+html: output,
 });
 
 });
@@ -546,7 +546,38 @@ html: "<h2>Your Verification code:"+n+"<h2>",
 
 });
 
+app.get("/forget",function(req,res){
+  Detail.findOne({email:req.session.email},function(err,detail){
+  if(err){
+    console.log(err);
+  }
+  else{
+    if(detail){
+      var letter=detail.name.charAt(0);
+      var upperLetter=letter.toUpperCase();
+        res.render("forget",{detail:detail,upperLetter:upperLetter});
 
+    // console.log("signin"+detail);
+  }else{
+    // console.log("signin1"+detail);
+  res.render("forget",{detail:""});
+  }
+}});
+
+});
+
+app.post("/forget",function(req,res){
+  User.findOneAndRemove({email:req.body.email1},function(err,proresults){
+if(err){
+  req.flash('Please signUp','There is no email present in our Database');
+  res.redirect("/signup");
+  console.log(err);
+} else{
+req.flash('Your Account Deleted','Please signup with this email once again');
+res.redirect("/signup");
+}
+})
+});
 
 
 app.post("/signin",function(req,res){
@@ -578,10 +609,10 @@ app.get("/logout",function(req,res){
   res.redirect("/");
 })
 
-app.route("/upload")
 
-.get(function(req,res){
 
+app.get("/upload",function(req,res){
+  if(req.isAuthenticated()){
   Detail.findOne({email:req.session.email},function(err,detail){
   if(err){
     console.log(err);
@@ -593,15 +624,16 @@ app.route("/upload")
         res.render("upload",{success:'',detail:detail,upperLetter:upperLetter});
 
     // console.log("signin"+detail);
-  }
-  else{
+  }else{
     // console.log("signin1"+detail);
   res.render("upload",{success:'',detail:""});
   }
+  }})}else{
+    res.redirect("/signup");
   }
 });
 
-});
+;
 
 app.post("/upload",uploadImage,function(req,res){
   var success ="uploaded successfully";
@@ -754,6 +786,7 @@ else{
 });
 
 app.get("/upload-book",function(req,res){
+  if(req.isAuthenticated()){
   Detail.findOne({email:req.session.email},function(err,detail){
   if(err){
     console.log(err);
@@ -770,8 +803,9 @@ app.get("/upload-book",function(req,res){
     res.render("upload-book",{success:'',detail:""});
   }
   }
-});
-
+})}else{
+  res.redirect("/signup");
+};
 });
 
 app.post("/upload-book",uploadBook,function(req,res){
@@ -967,9 +1001,12 @@ app.get("/profile/:id",function(req,res){
 
 
 
-app.route("/courses/detailcourses/:detailcoursesId")
 
-.get(function(req,res){
+
+app.get("/courses/detailcourses/:detailcoursesId",function(req,res){
+
+  if(req.isAuthenticated()){
+
   var route = req.params.detailcoursesId;
   Seller.findOne({_id:route},function(err,result){
   instructorName= result.InstructorName,
@@ -1029,13 +1066,15 @@ app.route("/courses/detailcourses/:detailcoursesId")
   }
   }
 });
-
-});
+})}else{
+  res.redirect("/signup");
+}
 });
 
 app.route("/books/detailBooks/:detailBookId")
 
 .get(function(req,res){
+  if(req.isAuthenticated()){
     var route = req.params.detailBookId;
     // console.log(route);
   Sell.findOne({_id:route},function(err,found){
@@ -1091,9 +1130,10 @@ app.route("/books/detailBooks/:detailBookId")
     }
     }
   });
-
   // console.log(writer);
-});
+})}else{
+  res.redirect("/signin");
+};
 });
 
 app.get("/safety",function(req,res){
@@ -1116,12 +1156,7 @@ app.get("/safety",function(req,res){
   }
   }
 });
-
 });
-
-
-
-
 app.get('/add/:id', function(req, res, next) {
   Sell.find({_id:req.params.id},function(err,products){
   if(!err){
@@ -1252,6 +1287,41 @@ function escapeRegex(text) {
 
 
 app.get('/checkout',function(req,res){
+
+  if (!req.session.cart) {
+    Detail.findOne({email:req.session.email},function(err,detail){
+    if(err){
+      console.log(err);
+    }
+    else{
+      if(detail){
+        var letter=detail.name.charAt(0);
+        var upperLetter=letter.toUpperCase();
+
+        return res.render('checkout', {
+          products: null,
+          detail:detail,
+          upperLetter:upperLetter
+
+        });
+
+      // console.log("signin"+detail);
+    }
+    else{
+      // console.log("signin1"+detail);
+      return res.render('checkout', {
+        products: null,
+        detail:"",
+
+      });
+    }
+    }
+  });
+
+  }
+  var cart = new Cart(req.session.cart);
+  // console.log(cart.getItems());
+  // console.log(cart.totalItems);
   Detail.findOne({email:req.session.email},function(err,detail){
   if(err){
     console.log(err);
@@ -1260,18 +1330,111 @@ app.get('/checkout',function(req,res){
     if(detail){
       var letter=detail.name.charAt(0);
       var upperLetter=letter.toUpperCase();
-        res.render("checkout",{detail:detail,upperLetter:upperLetter});
+      Seller.findOne({_id:cart.id},function(err,result){
+        if(err){
+          res.redirect("/courses");
+          console.log(err);
+
+        }
+        else{
+          if(result){
+
+
+             console.log(cart.items);
+             res.render('checkout', {
+              // title: 'NodeJS Shopping Cart',
+              products: cart.getItems(),
+              totalItems:cart.totalItems,
+              totalPrice: cart.totalPrice,
+              detail:detail,
+              upperLetter:upperLetter
+            });}
+
+        }
+      });
+
+      Sell.findOne({_id:cart.id},function(err,result){
+        if(err){
+          res.redirect("/courses");
+          console.log(err);
+
+        }
+        else{
+          if(result){
+             console.log(cart);
+            res.render('checkout', {
+              // title: 'NodeJS Shopping Cart',
+              products: cart.getItems(),
+              totalItems:cart.totalItems,
+              totalPrice: cart.totalPrice,
+              detail:detail,
+              upperLetter:upperLetter
+            });}
+
+        }
+
+      })
+
+
+      // console.log(cart.getItems());
+
 
 
     // console.log("signin"+detail);
   }
   else{
     // console.log("signin1"+detail);
-      res.render("checkout",{detail:""});
+    var letter=detail.name.charAt(0);
+    var upperLetter=letter.toUpperCase();
+    Seller.findOne({_id:cart.id},function(err,result){
+      if(err){
+        res.redirect("/books");
+        console.log(err);
+
+      }
+      else{
+        if(result){
+
+
+           console.log(cart.items);
+           res.render('checkout', {
+            // title: 'NodeJS Shopping Cart',
+            products: cart.getItems(),
+            totalItems:cart.totalItems,
+            totalPrice: cart.totalPrice,
+            detail:"",
+            upperLetter:upperLetter
+          });}
+
+      }
+    });
+
+    Sell.findOne({_id:cart.id},function(err,result){
+      if(err){
+        res.redirect("/books");
+        console.log(err);
+
+      }
+      else{
+        if(result){
+           console.log(cart);
+          res.render('checkout', {
+            // title: 'NodeJS Shopping Cart',
+            products: cart.getItems(),
+            totalItems:cart.totalItems,
+            totalPrice: cart.totalPrice,
+            detail:"",
+            upperLetter:upperLetter
+          });}
+
+      }
+
+    })
   }
   }
+  });
+
 });
-})
 
 
 app.listen(3000,function(){

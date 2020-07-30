@@ -560,9 +560,34 @@ input {
   color: #43474d;
   margin-right: 20px;
 }
-
-
-
+@media only screen and (max-width: 748px){
+  .font-weight-bold{
+    font-size: 1.5rem;
+  }
+  .signupbutton{
+    font-size: 0.5rem;
+  }
+  .social-google{
+    padding: 3px;
+  }
+  .signup-page-form{
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  .overlay-panel{
+    padding: 6px;
+  }
+.bookpic{
+  height:190px;
+}
+  .profilebutton{
+    margin: 0px;
+  }
+  .navbar-toggler{
+    padding: 0px;
+    margin-left: 60px;
+  }
+}
 
 
 /* ------------------------------css for courses page------------------------------------------------------------- */
@@ -2970,14 +2995,29 @@ h6, .h6 {
   width: 100%;
   padding: 1.875rem 1rem;
   background: #3c37f1;
+
   /* background: transparent; */
 }
 /* #3c37f1 */
-@media (max-width: 991px) {
+@media (max-width: 761px) {
   .navbar {
     padding: .875rem 1rem;
     height: 71px;
   }
+}
+
+@media (max-width: 761px) {
+  .dropdown-button1 {
+  margin-right: 102px;
+  padding-bottom: 3px;
+  background-color: #fff;
+  }
+}
+
+@media (max-width: 761px) {
+.buybutton{
+  color:#000000;
+}
 }
 
 .navbar .navbar-brand {
@@ -3100,6 +3140,13 @@ h6, .h6 {
     color: #000000;
   }
 }
+
+@media (max-width: 991px) {
+  .navbar .navbar-collapse .navbar-nav .nav-item{
+    color: #000000;
+  }
+}
+
 
 @media (max-width: 991px) and (max-width: 991px) {
   .navbar .navbar-collapse .close-menu {

@@ -2,7 +2,7 @@ module.exports = function Cart(cart) {
     this.items = cart.items || {};
     this.totalItems = cart.totalItems || 0;
     this.totalPrice = cart.totalPrice || 0;
-
+    this.id=cart.id||0
     this.add = function(item, id) {
         var cartItem = this.items[id];
         if (!cartItem) {
@@ -12,6 +12,8 @@ module.exports = function Cart(cart) {
         cartItem.discountedPrice = cartItem.item.discountedPrice * cartItem.quantity;
         this.totalItems++;
         this.totalPrice += cartItem.item.discountedPrice;
+        this.id=id;
+        console.log(id);
     };
 
     this.remove = function(id) {
@@ -24,6 +26,7 @@ module.exports = function Cart(cart) {
         var arr = [];
         for (var id in this.items) {
             arr.push(this.items[id]);
+
         }
         return arr;
     };
