@@ -146,6 +146,8 @@ description:String,
 email:String,
 name:String,
 phonenumber:Number,
+phonenumber1:Number,
+name1:String
 });
 
 const Seller = mongoose.model("Seller", SellerSchema);
@@ -163,6 +165,8 @@ const SellSchema =  new mongoose.Schema({
   email:String,
   name:String,
   phonenumber:Number,
+  phonenumber1:Number,
+  name1:String
 });
 
 const Sell = mongoose.model("Sell", SellSchema);
@@ -202,7 +206,7 @@ app.get(("/"),function(req,res){
 //   console.log("in get"+found);
 // }
  id=Object.freeze(req.flash('id'))
-
+// console.log("123"+req.session.name);
  console.log("1"+req.session.email);
 Detail.findOne({email:req.session.email},function(err,detail){
   if(err){
@@ -212,7 +216,7 @@ Detail.findOne({email:req.session.email},function(err,detail){
     if(detail){
     var letter=detail.name.charAt(0);
     var upperLetter=letter.toUpperCase();
-    console.log(upperLetter);
+    // console.log(upperLetter);
     res.render("home",{detail:detail,upperLetter:upperLetter})
     // console.log("12"+detail);
   }
@@ -360,7 +364,7 @@ app.get("/books",function(req,res){
 
           }
           else{
-            console.log("i found book "+founds);
+            // console.log("i found book "+founds);
             Detail.findOne({email:req.session.email},function(err,detail){
               if(err){
                 console.log(err);
@@ -621,7 +625,9 @@ app.post("/upload",uploadImage,function(req,res){
         description:req.body.description,
         email:req.session.email,
         name:detail.name,
+        // name1:req.body.name1,
         phonenumber:detail.phonenumber,
+        // phonenumber1:req.body.phonenumber1
       });
       newSeller.save(function(err,result){
         if(err) {
@@ -670,6 +676,74 @@ app.post("/upload",uploadImage,function(req,res){
       }
       });
   }
+else{
+  console.log(req.body.name1);
+  var newSeller= new Seller({
+    InstructorName: req.body.InstructorName,
+    time: req.body.time,
+    courseProvider: req.body.courseProvider,
+    HostelNum:req.body.HostelNum,
+    RoomNum: req.body.RoomNum,
+    courseImage:req.file.filename,
+    courseName:req.body.courseName,
+    discountedPrice:req.body.discountedPrice,
+    actualPrice:req.body.actualPrice,
+    description:req.body.description,
+    email:req.session.email,
+    // name:detail.name,
+    name1:req.body.name1,
+    // phonenumber:detail.phonenumber,
+    phonenumber1:req.body.phonenumber1
+  });
+  newSeller.save(function(err,result){
+    if(err) {
+      console.log(err);
+      Detail.findOne({email:req.session.email},function(err,detail){
+      if(err){
+        console.log(err);
+      }
+      else{
+        if(detail){
+          var letter=detail.name.charAt(0);
+          var upperLetter=letter.toUpperCase();
+            res.render('upload', { success:"Oops its seems that you enter the wrong data type ",detail:detail,upperLetter:upperLetter});
+
+        // console.log("signin"+detail);
+      }
+      else{
+        // console.log("signin1"+detail);
+        res.render('upload', { success:"Oops its seems that you enter the wrong data type ",detail:""});
+      }
+      }
+    });
+
+    }
+
+  else {
+    Detail.findOne({email:req.session.email},function(err,detail){
+    if(err){
+      console.log(err);
+    }
+    else{
+      if(detail){
+        var letter=detail.name.charAt(0);
+        var upperLetter=letter.toUpperCase();
+        res.render('upload', { success:success,detail:detail,upperLetter:upperLetter});
+      // console.log("signin"+detail);
+    }
+    else{
+      // console.log("signin1"+detail);
+      res.render('upload', { success:success,detail:""});
+    }
+    }
+  });
+
+
+  }
+  });
+
+}
+
 
   }
 });
@@ -770,6 +844,67 @@ newSell.save(function(err,found){
 var bookImage = newSell.bookImage;
 }
 
+else{
+  var newSell = new Sell({
+  Writer: req.body.WriterName,
+  Something: req.body.Something,
+  subject: req.body.subject,
+  BookName: req.body.BookName,
+  Hostel: req.body.Hostel,
+  Room : req.body.Room,
+  bookImage : req.file.filename,
+  discountedPrice:req.body.discountedPrice,
+  actualprice:req.body.actualprice,
+  email:req.session.email,
+  name1:req.body.name1,
+  phonenumber1:req.body.phonenumber1
+  });
+  newSell.save(function(err,found){
+    if(err) {
+      console.log(err);
+      Detail.findOne({email:req.session.email},function(err,detail){
+      if(err){
+        console.log(err);
+      }
+      else{
+        if(detail){
+          var letter=detail.name.charAt(0);
+          var upperLetter=letter.toUpperCase();
+              res.render('upload-book', { success:"ERROR OCCURED:it seems that you have not given the correct data-type",detail:detail,upperLetter:upperLetter});
+        // console.log("signin"+detail);
+      }
+      else{
+        // console.log("signin1"+detail);
+            res.render('upload-book', { success:"ERROR OCCURED:it seems that you have not given the correct data-type",detail:""});
+      }
+      }
+    });
+
+    }
+    Detail.findOne({email:req.session.email},function(err,detail){
+    if(err){
+      console.log(err);
+    }
+    else{
+      if(detail){
+        var letter=detail.name.charAt(0);
+        var upperLetter=letter.toUpperCase();
+        res.render('upload-book', { success:success,detail:detail,upperLetter:upperLetter});
+      // console.log("signin"+detail);
+    }
+    else{
+      // console.log("signin1"+detail);
+          res.render('upload-book', { success:success,detail:""});
+    }
+    }
+  });
+
+  });
+
+}
+
+
+
 }
 });
 });
@@ -788,7 +923,7 @@ app.get("/faq",function(req,res){
     // console.log("signin"+detail);
   }
   else{
-    console.log("signin1"+detail);
+    // console.log("signin1"+detail);
     res.render("faq",{detail:""});
   }
   }
@@ -814,7 +949,7 @@ app.get("/profile/:id",function(req,res){
       console.log(err);
     }
     else{
-      console.log("09"+detail);
+      // console.log("09"+detail);
       if(detail){
         var letter=detail.name.charAt(0);
         var upperLetter=letter.toUpperCase();
@@ -989,7 +1124,8 @@ app.get("/safety",function(req,res){
 
 app.get('/add/:id', function(req, res, next) {
   Sell.find({_id:req.params.id},function(err,products){
-  if(!err){console.log(products);
+  if(!err){
+    // console.log(products);
   var productId = req.params.id;
   var cart = new Cart(req.session.cart ? req.session.cart : {});
   var product = products.filter(function(item) {
@@ -1114,6 +1250,28 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
+
+app.get('/checkout',function(req,res){
+  Detail.findOne({email:req.session.email},function(err,detail){
+  if(err){
+    console.log(err);
+  }
+  else{
+    if(detail){
+      var letter=detail.name.charAt(0);
+      var upperLetter=letter.toUpperCase();
+        res.render("checkout",{detail:detail,upperLetter:upperLetter});
+
+
+    // console.log("signin"+detail);
+  }
+  else{
+    // console.log("signin1"+detail);
+      res.render("checkout",{detail:""});
+  }
+  }
+});
+})
 
 
 app.listen(3000,function(){

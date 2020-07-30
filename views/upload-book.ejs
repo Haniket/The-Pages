@@ -9,8 +9,8 @@
           <strong>ERROR</strong> <%= success %>
               </div>
           <% } %>
-<div class="row basic-margin">
-  <div class="col-md-5 col-12 mt-5 mx-auto">
+<div class="row basic-margin px-3">
+  <div class="col-md-5 col-12 mt-5 mx-auto mb-5">
     <div class="card  d-inline">
     <div class="mt-4">
     <div class="upload-page-modal" data-aos-duration="500" data-aos="fade-up">
@@ -41,7 +41,7 @@
     <!-- </form> -->
 
   </div>
-  <div class="col-md-5 offset-md-1 shadow data-aos-duration="500" data-aos="fade-up"">
+  <div class="col-md-5 offset-md-1 shadow mt-5" data-aos-duration="500" data-aos="fade-up"">
     <div class=" card-body">
         <h2 class="h3 text-primary my-3">Book Info</h2>
         <form method="POST" id="form2" action="/upload-book" data-aos-duration="1000" data-aos="fade-up">
@@ -63,6 +63,14 @@
           <div class="form-group">
               <input class="form-control" type="text" required placeholder="discounted Price" name="discountedPrice">
           </div>
+          <%if(detail==""){%>
+          <div class="form-group">
+              <input class="form-control" required type="text" placeholder="Your name" name="name1">
+          </div>
+          <div class="form-group">
+              <input class="form-control" required type="text" placeholder="Phone-number" name="phonenumber1">
+          </div>
+        <%}%>
           <div class="form-group">
               <input class="form-control" type="text" required placeholder="Hostel-name" name="Hostel">
         </div>
