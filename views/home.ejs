@@ -8,7 +8,7 @@
             <div class="d-sm-flex justify-content-between">
               <div data-aos="zoom-in-up">
                 <div class="banner-title">
-                    <h3 class="font-weight-medium"> We Sell For
+                    <h3 class="font-weight-medium"><%if(detail){%> Hi,<%=detail.name%>.<%}%><br> We Sell For
                     Your "Profit" Because Having A Book
                     is a sign Of Intelligence.
 
@@ -19,7 +19,11 @@
                   <br>
                   Buy and sell textbooks directly with student on-campus.No shipping, no credit cards, no hassles... All Free!
                 </p>
-                <a href="/signup" class="btn btn-secondary mt-3 font-weight-normal">Sign In</a>
+                <%if(detail==""){%>
+                  <a href="/signup" class="btn btn-secondary mt-3 font-weight-normal">Sign In</a>
+                <%}%>
+
+
               </div>
               <div class="mt-5 mt-lg-0">
                 <img src="images/group1.svg" alt="marsmello" class="img-fluid" data-aos="zoom-in-up">
