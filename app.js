@@ -143,6 +143,9 @@ courseName:String,
 discountedPrice:Number,
 actualPrice:Number,
 description:String,
+email:String,
+name:String,
+phonenumber:Number,
 });
 
 const Seller = mongoose.model("Seller", SellerSchema);
@@ -156,7 +159,10 @@ const SellSchema =  new mongoose.Schema({
   Room: Number,
   bookImage: String,
   discountedPrice:Number,
-  actualprice:Number
+  actualprice:Number,
+  email:String,
+  name:String,
+  phonenumber:Number,
 });
 
 const Sell = mongoose.model("Sell", SellSchema);
@@ -525,11 +531,14 @@ html: "<h2>Your Verification code:"+n+"<h2>",
     });
 
     newOtp.save();
-    var name=req.body.NameUser;
+    // var name=req.body.NameUser;
+    req.session.email=req.body.username;
+    // req.session.name=req.body.NameUser;
+    // req.session.phonenumber=req.body.UserPhone;
 
 });
 
-req.session.email=req.body.username;
+
 
 });
 
@@ -547,7 +556,9 @@ app.post("/signin",function(req,res){
       console.log(err);
       res.redirect("/signup");
     }else{
+
       passport.authenticate("local")(req, res, function(){
+
         req.session.email=req.body.username;
         res.redirect("/");
 
@@ -566,6 +577,7 @@ app.get("/logout",function(req,res){
 app.route("/upload")
 
 .get(function(req,res){
+
   Detail.findOne({email:req.session.email},function(err,detail){
   if(err){
     console.log(err);
@@ -589,64 +601,79 @@ app.route("/upload")
 
 app.post("/upload",uploadImage,function(req,res){
   var success ="uploaded successfully";
-var newSeller= new Seller({
-  InstructorName: req.body.InstructorName,
-  time: req.body.time,
-  courseProvider: req.body.courseProvider,
-  HostelNum:req.body.HostelNum,
-  RoomNum: req.body.RoomNum,
-  courseImage:req.file.filename,
-  courseName:req.body.courseName,
-  discountedPrice:req.body.discountedPrice,
-  actualPrice:req.body.actualPrice,
-  description:req.body.description,
-});
-newSeller.save(function(err,result){
-  if(err) {
-    console.log(err);
-    Detail.findOne({email:req.session.email},function(err,detail){
-    if(err){
-      console.log(err);
-    }
-    else{
-      if(detail){
-        var letter=detail.name.charAt(0);
-        var upperLetter=letter.toUpperCase();
-          res.render('upload', { success:"Oops its seems that you enter the wrong data type ",detail:detail,upperLetter:upperLetter});
-
-      // console.log("signin"+detail);
-    }
-    else{
-      // console.log("signin1"+detail);
-      res.render('upload', { success:"Oops its seems that you enter the wrong data type ",detail:""});
-    }
-    }
-  });
-
-  }
-
-else {
   Detail.findOne({email:req.session.email},function(err,detail){
   if(err){
     console.log(err);
   }
   else{
     if(detail){
-      var letter=detail.name.charAt(0);
-      var upperLetter=letter.toUpperCase();
-      res.render('upload', { success:success,detail:detail,upperLetter:upperLetter});
-    // console.log("signin"+detail);
+      // console.log("welcome"+detail.name);
+      var newSeller= new Seller({
+        InstructorName: req.body.InstructorName,
+        time: req.body.time,
+        courseProvider: req.body.courseProvider,
+        HostelNum:req.body.HostelNum,
+        RoomNum: req.body.RoomNum,
+        courseImage:req.file.filename,
+        courseName:req.body.courseName,
+        discountedPrice:req.body.discountedPrice,
+        actualPrice:req.body.actualPrice,
+        description:req.body.description,
+        email:req.session.email,
+        name:detail.name,
+        phonenumber:detail.phonenumber,
+      });
+      newSeller.save(function(err,result){
+        if(err) {
+          console.log(err);
+          Detail.findOne({email:req.session.email},function(err,detail){
+          if(err){
+            console.log(err);
+          }
+          else{
+            if(detail){
+              var letter=detail.name.charAt(0);
+              var upperLetter=letter.toUpperCase();
+                res.render('upload', { success:"Oops its seems that you enter the wrong data type ",detail:detail,upperLetter:upperLetter});
+
+            // console.log("signin"+detail);
+          }
+          else{
+            // console.log("signin1"+detail);
+            res.render('upload', { success:"Oops its seems that you enter the wrong data type ",detail:""});
+          }
+          }
+        });
+
+        }
+
+      else {
+        Detail.findOne({email:req.session.email},function(err,detail){
+        if(err){
+          console.log(err);
+        }
+        else{
+          if(detail){
+            var letter=detail.name.charAt(0);
+            var upperLetter=letter.toUpperCase();
+            res.render('upload', { success:success,detail:detail,upperLetter:upperLetter});
+          // console.log("signin"+detail);
+        }
+        else{
+          // console.log("signin1"+detail);
+          res.render('upload', { success:success,detail:""});
+        }
+        }
+      });
+
+
+      }
+      });
   }
-  else{
-    // console.log("signin1"+detail);
-    res.render('upload', { success:success,detail:""});
-  }
+
   }
 });
 
-
-}
-});
 // var courseimage =newSeller.courseName;
 // var discountedPrice =newSeller.discountedPrice;
 // var actualPrice =newSeller.actualPrice;
@@ -676,6 +703,14 @@ app.get("/upload-book",function(req,res){
 app.post("/upload-book",uploadBook,function(req,res){
 
 var success = "Upload successfull See in book section your product added";
+Detail.findOne({email:req.session.email},function(err,detail){
+if(err){
+  console.log(err);
+}
+else{
+  if(detail){
+
+
 var newSell = new Sell({
 Writer: req.body.WriterName,
 Something: req.body.Something,
@@ -686,6 +721,9 @@ Room : req.body.Room,
 bookImage : req.file.filename,
 discountedPrice:req.body.discountedPrice,
 actualprice:req.body.actualprice,
+email:req.session.email,
+name:detail.name,
+phonenumber:detail.phonenumber,
 });
 newSell.save(function(err,found){
   if(err) {
@@ -730,6 +768,10 @@ newSell.save(function(err,found){
 });
 
 var bookImage = newSell.bookImage;
+}
+
+}
+});
 });
 
 app.get("/faq",function(req,res){
@@ -805,6 +847,8 @@ app.route("/courses/detailcourses/:detailcoursesId")
   discountedPrice=  result.discountedPrice,
   actualPrice = result.actualPrice,
   description=result.description,
+  name=result.name,
+  phonenumber=result.phonenumber,
 
   Detail.findOne({email:req.session.email},function(err,detail){
   if(err){
@@ -812,6 +856,7 @@ app.route("/courses/detailcourses/:detailcoursesId")
   }
   else{
     if(detail){
+      // console.log("my name"+result.name);
       var letter=detail.name.charAt(0);
       var upperLetter=letter.toUpperCase();
       res.render("detailcourses",{
@@ -823,12 +868,16 @@ app.route("/courses/detailcourses/:detailcoursesId")
       description:description,
       result:result,
       detail:detail,
-      upperLetter:upperLetter
+      upperLetter:upperLetter,
+      name:name,
+      phonenumber:phonenumber,
+
       });
 
     // console.log("signin"+detail);
   }
   else{
+    // console.log("hell0"+result.name);
     // console.log("signin1"+detail);
     res.render("detailcourses",{
     instructorName:instructorName,
@@ -839,6 +888,8 @@ app.route("/courses/detailcourses/:detailcoursesId")
     description:description,
     result:result,
     detail:"",
+    name:name,
+    phonenumber:phonenumber
     });
   }
   }

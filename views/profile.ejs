@@ -3,29 +3,27 @@
   <div class="col-md-12">
     <div class = " ">
 
-        <div class="wrapper mx-auto">
-            <div class="left">
-                <img src="my image.jpg" alt="user" width="250" height="250" class="rounded-circle">
-                <h4><%=detail.name%></h4>
-<ul class="list-unstyled">
-  <li>
-      <button type="button" class="btn btn-success">Edit</button>
-  </li>
+        <div class="wrapper mx-auto row">
+            <div class="left col-12 col-md-5 ">
+
+               <button type="button" name="button" class="btn btn-lg rounded-circle py-4 px-5" id="mainButton"><h1 class="display-1 text-light" style="font-size:60px"><strong><%=upperLetter%></strong></h1></button>
+                <!-- <img src="my image.jpg" alt="user" width="250" height="250" class="rounded-circle"> -->
+                <h4 class="my-5"><%=detail.name%></h4>
+<ul class="list-unstyled mt-5">
+
   <br>
   <li>
-      <button type="button" class="btn btn-danger ">Help</button>
+    <a href="/safety"> <button type="button" class="btn btn-primary mt-5 ">Help</button></a>
   </li>
 </ul>
 
 
             </div>
 
-            <div class="right">
+            <div class="right col-12 col-md-5">
                 <div class="info">
                     <h3>Information
-                      <%if(detail){%>
-                      <%=detail%>
-                    <%}%>
+
                   </h3>
                     <div class="info_data">
                         <div class="data">
@@ -40,15 +38,15 @@
                 </div>
 
                 <div class="projects">
-                    <h3>Details</h3>
-                    <div class="projects_data">
-                        <div class="data">
-                            <h4>BUY</h4>
-                            <p>10 books and 3 courses</p>
+                    <h3>USEFULL LINK</h3>
+                    <div class="projects_data row container-fluid">
+                        <div class="data col-md-6 col-12">
+                            <a href="/books" ><h6 class="my-md-3"  >BUY BOOK</h6></a>
+                            <a href="/courses" ><h6 class="my-md-5">BUY COURSES</h6></a>
                         </div>
-                        <div class="data">
-                            <h4>SELL</h4>
-                            <p>2 books and 3 courses </p>
+                        <div class="data col-md-6 col-12 mt-5 mb-3 mt-md-0 mb-md-0">
+                          <a href="/upload-book"><h6 class="my-md-3">SELL BOOK</h6></a>
+                            <a href="/upload"><h6 class="my-md-5">SELL COURSES</h6></a>
                         </div>
                     </div>
                 </div>
@@ -68,5 +66,8 @@
   </div>
 </div>
 
-
+<script type="text/javascript">
+  var randomColor = Math.floor(Math.random()*16777215).toString(16);
+document.getElementById("mainButton").style.backgroundColor = '#' + randomColor;
+</script>
 <%- include("partials/footer") -%>
