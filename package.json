@@ -57,6 +57,9 @@
   },
   "author": "Ayush and Haniket",
   "license": "ISC",
+  "engines": {
+    "node": "14.2.0"
+  },
   "bugs": {
     "url": "https://github.com/UNSTOPABLE-HUSTLERS/project-/issues"
   },
