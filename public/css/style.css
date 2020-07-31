@@ -577,8 +577,8 @@ input {
   .overlay-panel{
     padding: 6px;
   }
-.bookpic{
-  height:190px;
+  .bookpic{
+  height:150px;
 }
   .profilebutton{
     margin: 0px;

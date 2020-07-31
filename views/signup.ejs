@@ -4,6 +4,17 @@
   <strong>Opps!</strong> <%= msg %>
    </div>
 <%}%>
+<%if(forgetpassword=="There is no email present in our Database"){%>
+  <div class="alert alert-danger mt-5 pt-5 basic-margin">
+  <strong>Opps!</strong> <%= forgetpassword %>
+   </div>
+<%}%>
+<%if(forgetpassword=="Please signup with this email once again account deleted from our database"){%>
+  <div class="alert alert-danger mt-5 pt-5 basic-margin">
+  <strong>Opps!</strong> <%= forgetpassword %>
+   </div>
+<%}%>
+
 <div class="container-fluid">
   <div class="row basic-margin">
 

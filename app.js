@@ -49,7 +49,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-mongoose.connect("mongodb://localhost:27017/thepagesDB", {useNewUrlParser: true,useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://admin-ayush:ayush095bansal@cluster0.d7xf0.mongodb.net/thepagesDB?retryWrites=true&w=majority", {useNewUrlParser: true,useUnifiedTopology: true});
 
 const userSchema = new mongoose.Schema({
 
@@ -94,7 +94,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google/books",
   },
   function(accessToken, refreshToken, profile, cb) {
-    console.log(profile);
+    // console.log(profile);
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
       return cb(err, user);
     });
@@ -107,7 +107,7 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:3000/auth/facebook/books",
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
+    // console.log(profile);
     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
       if (err) { return done(err); }
       done(null, user)
@@ -207,7 +207,7 @@ app.get(("/"),function(req,res){
 // }
  id=Object.freeze(req.flash('id'))
 // console.log("123"+req.session.name);
- console.log("1"+req.session.email);
+ // console.log("1"+req.session.email);
 Detail.findOne({email:req.session.email},function(err,detail){
   if(err){
     console.log(err);
@@ -318,13 +318,13 @@ app.get("/signup",function(req,res){
       if(detail){
         var letter=detail.name.charAt(0);
         var upperLetter=letter.toUpperCase();
-  res.render("signup",{msg:req.flash('msg'),detail:detail,upperLetter:upperLetter});
+  res.render("signup",{msg:req.flash('msg'),detail:detail,upperLetter:upperLetter,forgetpassword:req.flash('forgetpassword')});
 
       // console.log("signup"+detail);
     }
     else{
       // console.log("signup1"+detail);
-res.render("signup",{msg:req.flash('msg'),detail:""});
+res.render("signup",{msg:req.flash('msg'),forgetpassword:req.flash('forgetpassword'),detail:""});
     }
     }
   })
@@ -353,7 +353,7 @@ res.render("signin",{alreadyexists:req.flash('alreadyexists'),detail:""});
 
 app.get("/books",function(req,res){
 
- 
+
     if(req.query.searchBook){
     const regex = new RegExp(escapeRegex(req.query.searchBook), 'gi');
     Sell.find({ $or: [{BookName:regex},{subject:regex},{Writer:regex}]}, function(err, founds) {
@@ -361,7 +361,6 @@ app.get("/books",function(req,res){
             console.log(err);
         } else {
           if(founds.lenght<1){
-
           }
           else{
             // console.log("i found book "+founds);
@@ -413,7 +412,7 @@ app.get("/books",function(req,res){
         // console.log(founds);
       }
     })}
- 
+
   }
 );
 
@@ -567,16 +566,16 @@ app.get("/forget",function(req,res){
 });
 
 app.post("/forget",function(req,res){
-  User.findOneAndRemove({email:req.body.email1},function(err,proresults){
+  User.findOneAndRemove({username:req.body.email1},function(err,proresults){
 if(err){
-  req.flash('Please signUp','There is no email present in our Database');
+  req.flash('forgetpassword','There is no email present in our Database');
   res.redirect("/signup");
   console.log(err);
 } else{
-req.flash('Your Account Deleted','Please signup with this email once again');
+req.flash('forgetpassword','Please signup with this email once again account deleted from our database');
 res.redirect("/signup");
 }
-})
+});
 });
 
 
@@ -1066,7 +1065,8 @@ app.get("/courses/detailcourses/:detailcoursesId",function(req,res){
   }
   }
 });
-})}else{
+});
+}else{
   res.redirect("/signup");
 }
 });
@@ -1202,6 +1202,7 @@ app.get('/addcourse/:id', function(req, res, next) {
 
 
 app.get('/addtocart', function(req, res, next) {
+  if(req.isAuthenticated()){
   if (!req.session.cart) {
     Detail.findOne({email:req.session.email},function(err,detail){
     if(err){
@@ -1267,7 +1268,9 @@ app.get('/addtocart', function(req, res, next) {
   }
   }
 });
-
+}else{
+  res.redirect("/signup");
+}
 });
 
 app.get('/remove/:id', function(req, res, next) {
@@ -1361,7 +1364,7 @@ app.get('/checkout',function(req,res){
         }
         else{
           if(result){
-             console.log(cart);
+             // console.log(cart);
             res.render('checkout', {
               // title: 'NodeJS Shopping Cart',
               products: cart.getItems(),
@@ -1384,8 +1387,8 @@ app.get('/checkout',function(req,res){
   }
   else{
     // console.log("signin1"+detail);
-    var letter=detail.name.charAt(0);
-    var upperLetter=letter.toUpperCase();
+    // var letter=detail.name.charAt(0);
+    // var upperLetter=letter.toUpperCase();
     Seller.findOne({_id:cart.id},function(err,result){
       if(err){
         res.redirect("/books");
@@ -1396,14 +1399,14 @@ app.get('/checkout',function(req,res){
         if(result){
 
 
-           console.log(cart.items);
+           // console.log(cart.items);
            res.render('checkout', {
             // title: 'NodeJS Shopping Cart',
             products: cart.getItems(),
             totalItems:cart.totalItems,
             totalPrice: cart.totalPrice,
             detail:"",
-            upperLetter:upperLetter
+            // upperLetter:upperLetter
           });}
 
       }
@@ -1417,7 +1420,7 @@ app.get('/checkout',function(req,res){
       }
       else{
         if(result){
-           console.log(cart);
+           // console.log(cart);
           res.render('checkout', {
             // title: 'NodeJS Shopping Cart',
             products: cart.getItems(),

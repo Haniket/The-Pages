@@ -31,10 +31,10 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 				<div class="d-lg-none d-flex justify-content-between px-4 py-3 align-items-center">
-					<img src="images/logo-dark.svg" class="logo-mobile-menu" alt="logo">
+					<img src="/images/logo-dark.svg" class="logo-mobile-menu" alt="logo">
 					<a href="javascript:;" class="close-menu"><i class="mdi mdi-close"></i></a>
 				</div>
-				<ul class="navbar-nav ml-auto align-items-center">
+				<ul class="navbar-nav ml-md-auto align-items-center">
 					<li class="nav-item active">
 						<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 					</li>
@@ -68,12 +68,12 @@
 						<a class="nav-link btn-secondary " href="/faq">ContactUs</a>
 					</li>
 				</ul>
-				
+
 			</div>
-			<div class="dropdown pmd-dropdown pmd-user-info ml-auto ">
+			<div class="dropdown pmd-dropdown pmd-user-info ml-md-auto ">
 				<a href="#" class="btn-user  media align-items-center" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
 					<%if(detail){%>
-				<a href="/profile/<%=detail._id%>"><button type="button" class="btn btn-lg btn-success rounded-circle profilebutton" name="button" style="margin-left: 20px;;"><%=upperLetter%></button></a>
+				<a href="/profile/<%=detail._id%>"><button type="button" class="btn btn-lg btn-success ml-md-5 rounded-circle profilebutton" name="button"><%=upperLetter%></button></a>
 				<ul class="dropdown-menu mt-0" aria-labelledby="navbarDropdown1">
 
 					<a class="dropdown-item" href="/profile/<%=detail._id%>">Profile</a>
@@ -81,12 +81,12 @@
 					<a class="dropdown-item" href="/logout">Logout</a>
 					<%}%>
 					<%if(detail==""){%>
-					<a href="/signin"><button type="button" class="btn btn-success btn-xs" style="margin-left: 12px;" name="button">SignIn</button></a>
+					<a href="/signin"><button type="button" class="btn btn-success btn-xs d-none d-md-inline-block ml-md-3" name="button">SignIn</button></a>
 					<%}%>
 					</ul>
 				</a>
 			</div>
-			
+
 	</div>
 </div>
 	</nav>

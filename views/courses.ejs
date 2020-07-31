@@ -26,31 +26,31 @@
 
 <div class="row  justify-content-center pt-2 px-3">
   <%results.forEach(function(result){%>
-    <div class="col-md-4 col-sm-6 ">
+    <div class="col-md-4 col-6 ">
         <div class="product-grid7 shadow-sm p-3 mb-5 bg-white rounded shadow" data-aos="fade-up">
             <div class="product-image7 shadow">
 
-                  <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-1 " style="width:100%;height:255px;  object-fit:cover;" src="/uploads/<%=result.courseImage%>"></a>
+                  <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-1 bookpic" style="width:100%;height:255px;  object-fit:cover;" src="/uploads/<%=result.courseImage%>"></a>
      <%if(result.courseProvider=='Udemy'){%>
-      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="/images/course-page-udemy-sale.gif"></a>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2 bookpic" style="width:100%;height:255px;  object-fit:cover;" src="/images/course-page-udemy-sale.gif"></a>
      <%}%>
 
      <% if(result.courseProvider=='coursera'){%>
-      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="images/coursera-logo1.svg"></a>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2 bookpic" style="width:100%;height:255px;  object-fit:cover;" src="images/coursera-logo1.svg"></a>
      <%}%>
 
      <% if(result.courseProvider=='Edx'){%>
-      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover; opacity:1;" src="images/edx-logo.svg"></a>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2 bookpic" style="width:100%;height:255px;  object-fit:cover; opacity:1;" src="images/edx-logo.svg"></a>
      <%}%>
 
      <% if(result.courseProvider=='Udacity'){%>
-      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="/images/course-page-udemy-sale.gif"></a>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2 bookpic" style="width:100%;height:255px;  object-fit:cover;" src="https://venturebeat.com/wp-content/uploads/2019/03/3f825dfb-5717-489e-b972-e1df8b9723c3.png?resize=1200%2C600&strip=all"></a>
      <%}%>
      <% if(result.courseProvider=='GeeksforGeeks'){%>
-      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20190710102234/download3.png"></a>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2 bookpic" style="width:100%;height:255px;  object-fit:cover;" src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20190710102234/download3.png"></a>
      <%}%>
      <% if(result.courseProvider=='Others'){%>
-      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2" style="width:100%;height:255px;  object-fit:cover;" src="/images/course-page-udemy-sale.gif"></a>
+      <a href="/courses/detailcourses/<%=result._id%>"><img class="course-page-pic-2 bookpic" style="width:100%;height:255px;  object-fit:cover;" src="/uploads/<%=result.courseImage%>"></a>
      <%}%>
 
                 <ul class="social">
@@ -61,13 +61,6 @@
             </div>
             <div class="product-content">
                 <h3 class="title"><a href="#"><%=result.courseName%></a></h3>
-                <ul class="rating">
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                </ul>
                 <div class="price">Rs<%=result.discountedPrice%>.00
 
                     <span>Rs<%=result.actualPrice%>.00</span>
