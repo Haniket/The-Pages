@@ -91,7 +91,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/books",
+    callbackURL: "https://tranquil-spire-40507.herokuapp.com/auth/google/books",
   },
   function(accessToken, refreshToken, profile, cb) {
     // console.log(profile);
@@ -101,19 +101,19 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-passport.use(new FacebookStrategy({
-    clientID: process.env.CLIENT_ID1,
-    clientSecret: process.env.CLIENT_SECRET1,
-    callbackURL: "http://localhost:3000/auth/facebook/books",
-  },
-  function(accessToken, refreshToken, profile, done) {
-    // console.log(profile);
-    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      if (err) { return done(err); }
-      done(null, user)
-    });
-  }
-));
+// passport.use(new FacebookStrategy({
+//     clientID: process.env.CLIENT_ID1,
+//     clientSecret: process.env.CLIENT_SECRET1,
+//     callbackURL: "http://localhost:3000/auth/facebook/books",
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     // console.log(profile);
+//     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+//       if (err) { return done(err); }
+//       done(null, user)
+//     });
+//   }
+// ));
 
 var storage=multer.diskStorage({
 destination:"./public/uploads/",
