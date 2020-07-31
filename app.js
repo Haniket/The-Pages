@@ -49,7 +49,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-mongoose.connect("mongodb+srv://admin-ayush:ayush095bansal@cluster0.d7xf0.mongodb.net/thepagesDB?retryWrites=true&w=majority", {useNewUrlParser: true,useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://admin-ayush:Team2023@cluster0.d7xf0.mongodb.net/thepagesDB?retryWrites=true&w=majority", {useNewUrlParser: true,useUnifiedTopology: true});
 
 const userSchema = new mongoose.Schema({
 
