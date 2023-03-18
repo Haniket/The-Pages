@@ -11,6 +11,7 @@ const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
 const fs = require('fs')
 const multer  = require('multer');
+const cloudinary = require('cloudinary');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const findOrCreate = require('mongoose-find-or-create');
@@ -48,8 +49,13 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-mongoose.connect("mongodb+srv://admin-ayush:Team2023@cluster0.d7xf0.mongodb.net/thepagesDB?retryWrites=true&w=majority", {useNewUrlParser: true,useUnifiedTopology: true});
+cloudinary.config({
+  cloud_name: "dl4obncsh",
+  api_key: '565625953889872',
+  api_secret: '2uiZkwidBMPDdo_M0wdij-PeWzI',
+});
+// mongoose.connect("mongodb+srv://admin-ayush:Team2023@cluster0.d7xf0.mongodb.net/thepagesDB?retryWrites=true&w=majority", {useNewUrlParser: true,useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost:27017/thepagesDB", {useNewUrlParser: true,useUnifiedTopology: true});
 
 const userSchema = new mongoose.Schema({
 
@@ -116,7 +122,7 @@ passport.use(new GoogleStrategy({
 // ));
 
 var storage=multer.diskStorage({
-destination:"./public/uploads/",
+
 filename:(req,file,cb)=>{
 cb(null,file.fieldname+"_"+Date.now()+path.extname(file.originalname));
 
@@ -124,7 +130,17 @@ cb(null,file.fieldname+"_"+Date.now()+path.extname(file.originalname));
 });
 
 var uploadImage=multer({
-  storage:storage
+  storage:storage,
+  fileFilter: (req, file, cb) => {
+    var ext = path.extname(file.originalname);
+        if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg'&&'.svg') {
+      cb(new Error('File is not supported'), false);
+      req.flash('wrongtype','only image is allowed')
+      return res.redirect('/')
+    }
+
+    cb(null, true)
+  }
 }).single('courseImage');
 
 var uploadBook=multer({
@@ -634,22 +650,24 @@ app.get("/upload",function(req,res){
 
 ;
 
-app.post("/upload",uploadImage,function(req,res){
+app.post("/upload",uploadImage,async (req, res) => {
   var success ="uploaded successfully";
-  Detail.findOne({email:req.session.email},function(err,detail){
+  Detail.findOne({email:req.session.email},async (err, detail) => {
   if(err){
     console.log(err);
   }
   else{
     if(detail){
       // console.log("welcome"+detail.name);
+      const result = await cloudinary.v2.uploader.upload(req.file.path);
+      // console.log(result.secure_url);
       var newSeller= new Seller({
         InstructorName: req.body.InstructorName,
         time: req.body.time,
         courseProvider: req.body.courseProvider,
         HostelNum:req.body.HostelNum,
         RoomNum: req.body.RoomNum,
-        courseImage:req.file.filename,
+        courseImage:result.secure_url,
         courseName:req.body.courseName,
         discountedPrice:req.body.discountedPrice,
         actualPrice:req.body.actualPrice,
@@ -671,7 +689,7 @@ app.post("/upload",uploadImage,function(req,res){
             if(detail){
               var letter=detail.name.charAt(0);
               var upperLetter=letter.toUpperCase();
-                res.render('upload', { success:"Oops its seems that you enter the wrong data type ",detail:detail,upperLetter:upperLetter});
+                res.render('upload', { success:"Oops its seems that you enter the wrong data type ",detail:detail,upperLetter:upperLetter,image:req.flash('wrongtype')});
 
             // console.log("signin"+detail);
           }
@@ -708,6 +726,7 @@ app.post("/upload",uploadImage,function(req,res){
       });
   }
 else{
+      const result = await cloudinary.v2.uploader.upload(req.file.path);
   console.log(req.body.name1);
   var newSeller= new Seller({
     InstructorName: req.body.InstructorName,
@@ -715,7 +734,7 @@ else{
     courseProvider: req.body.courseProvider,
     HostelNum:req.body.HostelNum,
     RoomNum: req.body.RoomNum,
-    courseImage:req.file.filename,
+    courseImage:result.secure_url,
     courseName:req.body.courseName,
     discountedPrice:req.body.discountedPrice,
     actualPrice:req.body.actualPrice,
@@ -807,17 +826,17 @@ app.get("/upload-book",function(req,res){
 };
 });
 
-app.post("/upload-book",uploadBook,function(req,res){
+app.post("/upload-book",uploadBook, async (req, res) => {
 
 var success = "Upload successfull See in book section your product added";
-Detail.findOne({email:req.session.email},function(err,detail){
+Detail.findOne({email:req.session.email},async (err, detail) => {
 if(err){
   console.log(err);
 }
 else{
   if(detail){
 
-
+const result = await cloudinary.v2.uploader.upload(req.file.path);
 var newSell = new Sell({
 Writer: req.body.WriterName,
 Something: req.body.Something,
@@ -825,7 +844,7 @@ subject: req.body.subject,
 BookName: req.body.BookName,
 Hostel: req.body.Hostel,
 Room : req.body.Room,
-bookImage : req.file.filename,
+bookImage : result.secure_url,
 discountedPrice:req.body.discountedPrice,
 actualprice:req.body.actualprice,
 email:req.session.email,
@@ -878,6 +897,7 @@ var bookImage = newSell.bookImage;
 }
 
 else{
+  const result = await cloudinary.v2.uploader.upload(req.file.path);
   var newSell = new Sell({
   Writer: req.body.WriterName,
   Something: req.body.Something,
@@ -885,7 +905,7 @@ else{
   BookName: req.body.BookName,
   Hostel: req.body.Hostel,
   Room : req.body.Room,
-  bookImage : req.file.filename,
+  bookImage :result.secure_url,
   discountedPrice:req.body.discountedPrice,
   actualprice:req.body.actualprice,
   email:req.session.email,
@@ -1343,7 +1363,7 @@ app.get('/checkout',function(req,res){
           if(result){
 
 
-             console.log(cart.items);
+             // console.log(cart.items);
              res.render('checkout', {
               // title: 'NodeJS Shopping Cart',
               products: cart.getItems(),
