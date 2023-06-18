@@ -54,8 +54,8 @@ cloudinary.config({
   api_key: '565625953889872',
   api_secret: '2uiZkwidBMPDdo_M0wdij-PeWzI',
 });
-// mongoose.connect("mongodb+srv://admin-ayush:Team2023@cluster0.d7xf0.mongodb.net/thepagesDB?retryWrites=true&w=majority", {useNewUrlParser: true,useUnifiedTopology: true});
-mongoose.connect("mongodb://localhost:27017/thepagesDB", {useNewUrlParser: true,useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://admin-ayush:Team2023@cluster0.d7xf0.mongodb.net/thepagesDB?retryWrites=true&w=majority", {useNewUrlParser: true,useUnifiedTopology: true});
+// mongoose.connect("mongodb://localhost:27017/thepagesDB", {useNewUrlParser: true,useUnifiedTopology: true});
 
 const userSchema = new mongoose.Schema({
 
